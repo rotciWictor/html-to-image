@@ -16,12 +16,57 @@ Conversor profissional de arquivos HTML para imagens com arquitetura enterprise,
 - 🧪 **34 Testes Unitários**: Cobertura completa das funcionalidades
 - 📁 **Estrutura Organizada**: Sem arquivos soltos, tudo no lugar certo
 
-## 📦 Instalação Rápida
+## ⚡ Quick Start - Ver Resultado em 2 Minutos
+
+### 1️⃣ Instalar (30 segundos)
+```bash
+# Clonar e instalar
+git clone https://github.com/rotciWictor/html-to-image.git
+cd html-to-image
+npm install
+```
+
+### 2️⃣ Ver Resultado Imediato (30 segundos)
+```bash
+# Gerar 3 templates Instagram e converter para PNG
+node index.js --preset instagram --generate 3
+node index.js examples/instagram
+
+# Resultado: 3 imagens PNG (1080x1080) na pasta examples/instagram/
+```
+
+### 3️⃣ Testar com Seu HTML (1 minuto)
+```bash
+# Converter qualquer HTML para imagem
+node index.js ./meu-arquivo.html --width 1200 --height 800
+```
+
+**🎯 Pronto! Você já tem imagens geradas. Agora pode explorar mais detalhes abaixo.**
+
+### 📸 O que você vai ver:
+- **Instagram**: Imagens quadradas (1080x1080) prontas para posts
+- **PowerPoint**: Slides horizontais (1920x1080) para apresentações  
+- **Genérico**: Formatos customizáveis para qualquer uso
+
+### 🎨 Exemplos Prontos:
+- `examples/instagram/` - Templates para redes sociais
+- `examples/powerpoint/` - Slides para apresentações
+- `examples/generic/` - Formatos flexíveis
+
+### 🚀 Próximos Passos:
+- **Customizar**: Ajustar dimensões, qualidade, formato
+- **Automatizar**: Usar scripts para conversões em lote
+- **Integrar**: Usar a API programática no seu código
+- **Explorar**: Ver todos os comandos e opções disponíveis
+
+---
+
+## 📦 Instalação Completa
 
 ### Windows
 ```bash
 # Clonar projeto
-git clone <repository>
+git clone https://github.com/rotciWictor/html-to-image.git
 cd html-to-image
 
 # Executar instalação
@@ -31,14 +76,14 @@ scripts\install.bat
 ### Linux/macOS
 ```bash
 # Clonar projeto
-git clone <repository>
+git clone https://github.com/rotciWictor/html-to-image.git
 cd html-to-image
 
 # Instalar dependências
 npm install
 ```
 
-## 🚀 Uso Rápido
+## 🚀 Uso Avançado
 
 ### Comandos Essenciais
 ```bash
