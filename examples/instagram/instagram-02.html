@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Slide 2</title>
+    
+    <!-- Configuração inline para conversão -->
+    <script id="h2i-config" type="application/json">
+    {
+      "format": "png",
+      "quality": 90,
+      "width": 1080,
+      "height": 1080,
+      "background": "transparent",
+      "deviceScaleFactor": 2,
+      "fullPage": true
+    }
+    </script>
+    
+    <link rel="stylesheet" href="./assets/style.css">
+    <style>
+        .instagram-container {
+            width: 1080px;
+            height: 1080px;
+            margin: 0;
+            padding: 120px 80px; /* Zona segura Instagram */
+            box-sizing: border-box;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+        
+        .slide-number {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            line-height: 1.1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.8rem;
+            font-weight: 400;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            line-height: 1.3;
+        }
+        
+        .highlight-box {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            width: 100%;
+            max-width: 600px;
+        }
+        
+        .highlight-text {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .highlight-desc {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+        
+        .cta {
+            background: #ff6b6b;
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 2rem;
+            box-shadow: 0 8px 20px rgba(255,107,107,0.3);
+            transition: transform 0.2s ease;
+        }
+        
+        .cta:hover {
+            transform: translateY(-2px);
+        }
+        
+        .decorative-element {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            top: -100px;
+            left: -100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="instagram-container">
+        <div class="decorative-element"></div>
+        <div class="slide-number">2/3</div>
+        
+        <h1 class="title">Dica 2</h1>
+        <p class="subtitle">Produtividade em foco</p>
+        
+        <div class="highlight-box">
+            <div class="highlight-text">🚀 Técnica Pomodoro</div>
+            <div class="highlight-desc">25 min trabalho + 5 min pausa</div>
+        </div>
+        
+        
+    </div>
+    
+    <script src="./assets/script.js"></script>
+</body>
+</html>

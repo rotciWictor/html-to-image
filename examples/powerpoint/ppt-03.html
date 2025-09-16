@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PowerPoint Slide 3</title>
+    
+    <!-- Configuração inline para conversão -->
+    <script id="h2i-config" type="application/json">
+    {
+      "format": "png",
+      "quality": 90,
+      "width": 1920,
+      "height": 1080,
+      "background": "#ffffff",
+      "deviceScaleFactor": 2,
+      "fullPage": true
+    }
+    </script>
+    
+    <link rel="stylesheet" href="./assets/style.css">
+    <style>
+        .ppt-container {
+            width: 1920px;
+            height: 1080px;
+            margin: 0;
+            padding: 80px;
+            box-sizing: border-box;
+            background: #ffffff;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            position: relative;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid #2c5aa0;
+            padding-bottom: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .logo {
+            width: 120px;
+            height: 60px;
+            background: #2c5aa0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .slide-info {
+            text-align: right;
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+        
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #2c5aa0;
+            margin-bottom: 2rem;
+            line-height: 1.2;
+            grid-column: 1 / -1;
+        }
+        
+        .subtitle {
+            font-size: 1.8rem;
+            color: #666;
+            margin-bottom: 3rem;
+            grid-column: 1 / -1;
+        }
+        
+        .bullet-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .bullet-list li {
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            line-height: 1.4;
+        }
+        
+        .bullet-list li::before {
+            content: "▶";
+            color: #2c5aa0;
+            font-size: 1.2rem;
+            margin-right: 1rem;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            grid-column: 1 / -1;
+            margin-top: 2rem;
+        }
+        
+        .metric-card {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .metric-number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #2c5aa0;
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-label {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 600;
+        }
+        
+        .footer {
+            text-align: center;
+            color: #999;
+            font-size: 1rem;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="ppt-container">
+        <div class="header">
+            <div class="logo">LOGO</div>
+            <div class="slide-info">
+                Slide 3 de 3<br>
+                <small>Resultados Q4 2024</small>
+            </div>
+        </div>
+        
+        <div class="content">
+            
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-number">125%</div>
+                        <div class="metric-label">Crescimento</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-number">89%</div>
+                        <div class="metric-label">Satisfação</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-number">€2.5M</div>
+                        <div class="metric-label">Receita</div>
+                    </div>
+                </div>
+            
+        </div>
+        
+        <div class="footer">
+            Apresentação confidencial • 2025
+        </div>
+    </div>
+    
+    <script src="./assets/script.js"></script>
+</body>
+</html>

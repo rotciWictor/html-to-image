@@ -1,0 +1,29 @@
+{
+  "viewport": {
+    "width": 1200,
+    "height": 800,
+    "deviceScaleFactor": 2
+  },
+  "timeouts": {
+    "pageLoad": 30000,
+    "assetLoad": 2000
+  },
+  "output": {
+    "format": "png",
+    "quality": 100,
+    "fullPage": true
+  },
+  "safety": {
+    "backupHtml": true,
+    "backupFolder": "./backups",
+    "confirmDeletion": false
+  },
+  "processing": {
+    "parallel": true,
+    "maxConcurrent": 3
+  },
+  "logging": {
+    "level": "info",
+    "showAssets": true
+  }
+}
