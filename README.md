@@ -37,8 +37,17 @@ node index.js examples/instagram
 
 ### 3️⃣ Testar com Seu HTML (1 minuto)
 ```bash
-# Converter qualquer HTML para imagem
-node index.js ./meu-arquivo.html --width 1200 --height 800
+# Opção 1: HTML na pasta do projeto
+# 1. Copie seu arquivo.html para a pasta do projeto
+# 2. Execute:
+node index.js ./arquivo.html --width 1200 --height 800
+
+# Opção 2: HTML na pasta html-files/ (recomendado)
+# 1. Copie seu arquivo.html para html-files/
+# 2. Execute:
+node index.js html-files/arquivo.html
+
+# Resultado: arquivo.png na mesma pasta do HTML
 ```
 
 **🎯 Pronto! Você já tem imagens geradas. Agora pode explorar mais detalhes abaixo.**
@@ -52,6 +61,12 @@ node index.js ./meu-arquivo.html --width 1200 --height 800
 - `examples/instagram/` - Templates para redes sociais
 - `examples/powerpoint/` - Slides para apresentações
 - `examples/generic/` - Formatos flexíveis
+
+### 📁 Onde Colocar Seus HTMLs:
+- **Pasta do projeto**: `./meu-arquivo.html` (caminho relativo)
+- **Pasta padrão**: `html-files/meu-arquivo.html` (recomendado)
+- **Pasta específica**: `./minha-pasta/meu-arquivo.html`
+- **Múltiplos arquivos**: `node index.js ./minha-pasta/` (converte todos)
 
 ### 🚀 Próximos Passos:
 - **Customizar**: Ajustar dimensões, qualidade, formato
