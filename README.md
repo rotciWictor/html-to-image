@@ -196,20 +196,6 @@ scripts\test.bat
 
 **Cobertura Atual**: 34 testes passando ✅
 
-## ⚡ Performance
-
-### Benchmarks v2.1
-- **1 HTML → PNG**: ~2-3 segundos
-- **10 HTMLs paralelos**: ~8-12 segundos
-- **Instagram template**: ~1.5 segundos
-- **PowerPoint template**: ~2.5 segundos
-
-### Melhorias vs v2.0
-- 🚀 CLI parsing: 3x mais rápido
-- 🧠 Uso de memória: 40% menor
-- ⚡ Paralelização: até 10x simultâneo
-- 🛡️ Crashes: 0 (validação rigorosa)
-
 ## 🔧 API Programática
 
 ```javascript
