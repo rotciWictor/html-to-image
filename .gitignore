@@ -4,8 +4,13 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# User working files
-html-files/
+# User working files (keep structure, ignore contents except README and examples)
+html-files/*
+!html-files/README.md
+!html-files/examples/**
+!html-files/work/.gitkeep
+!html-files/assets/.gitkeep
+!html-files/**/.gitkeep
 
 # Runtime data
 pids
@@ -105,10 +110,6 @@ html-files/*.png
 html-files/*.jpg
 html-files/*.jpeg
 html-files/*.webp
-examples/*/*.png
-examples/*/*.jpg
-examples/*/*.jpeg
-examples/*/*.webp
 
 # Temporary files
 temp/
