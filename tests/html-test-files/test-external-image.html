@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste com Imagem Externa</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 1080px;
+            height: 1080px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #000000;
+            color: #FFFFFF;
+            font-family: Arial, sans-serif;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.7;
+            z-index: 1;
+        }
+        .content {
+            position: relative;
+            z-index: 2;
+            padding: 60px;
+        }
+        .title {
+            font-size: 72px;
+            font-weight: bold;
+            margin: 0 0 20px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+        .subtitle {
+            font-size: 32px;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <!-- Teste com imagem externa -->
+    <img src="https://picsum.photos/1080/1080?random=1" class="background-image" alt="Imagem externa">
+    <div class="content">
+        <h1 class="title">Teste com Imagem Externa</h1>
+        <p class="subtitle">Agora deve funcionar!</p>
+    </div>
+</body>
+</html>
