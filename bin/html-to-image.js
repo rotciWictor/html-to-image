@@ -71,12 +71,21 @@ class HtmlToImageConverter {
       let htmlFiles;
       
       if (pathStats.isFile()) {
-        // É um arquivo HTML específico
-        if (!folder.toLowerCase().endsWith('.html')) {
-          throw new Error(`Arquivo deve ter extensão .html: ${folder}`);
+        const ext = path.extname(folder).toLowerCase();
+        
+        if (ext === '.html') {
+          // É um arquivo HTML específico
+          htmlFiles = [folder];
+          console.log(`📄 Processando arquivo: ${path.basename(folder)}`);
+        } else if (['.zip', '.rar'].includes(ext)) {
+          // É um arquivo compactado - processar diretamente
+          console.log(`📦 Processando arquivo compactado: ${path.basename(folder)}`);
+          const results = await this.imageProcessor.processArchive(folder, this.config.output.outDir);
+          console.log(`✅ Conversão concluída: ${results.length} imagem(ns) gerada(s)`);
+          return;
+        } else {
+          throw new Error(`Formato de arquivo não suportado: ${ext}. Use .html, .zip ou .rar`);
         }
-        htmlFiles = [folder];
-        console.log(`📄 Processando arquivo: ${path.basename(folder)}`);
       } else {
         // É uma pasta - encontrar arquivos HTML
         htmlFiles = this.findHtmlFiles(folder);

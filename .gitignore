@@ -12,6 +12,10 @@ html-files/*
 !html-files/assets/.gitkeep
 !html-files/**/.gitkeep
 
+# Output directory (keep structure, ignore generated images)
+output/*
+!output/.gitkeep
+
 # Runtime data
 pids
 *.pid
