@@ -61,13 +61,26 @@ class HtmlToImageConverter {
       this.imageProcessor = new ImageProcessor(effectiveConfig);
       await this.imageProcessor.init();
       
-      // Verificar se pasta existe
+      // Verificar se caminho existe
       if (!fs.existsSync(folder)) {
-        throw new Error(`Pasta não encontrada: ${folder}`);
+        throw new Error(`Caminho não encontrado: ${folder}`);
       }
       
-      // Encontrar arquivos HTML
-      const htmlFiles = this.findHtmlFiles(folder);
+      // Detectar se é arquivo ou pasta
+      const pathStats = fs.statSync(folder);
+      let htmlFiles;
+      
+      if (pathStats.isFile()) {
+        // É um arquivo HTML específico
+        if (!folder.toLowerCase().endsWith('.html')) {
+          throw new Error(`Arquivo deve ter extensão .html: ${folder}`);
+        }
+        htmlFiles = [folder];
+        console.log(`📄 Processando arquivo: ${path.basename(folder)}`);
+      } else {
+        // É uma pasta - encontrar arquivos HTML
+        htmlFiles = this.findHtmlFiles(folder);
+      }
       
       if (htmlFiles.length === 0) {
         console.log('⚠️ Nenhum arquivo HTML encontrado.');
@@ -202,8 +215,8 @@ class HtmlToImageConverter {
   }
 }
 
-// Executar se chamado diretamente
-if (require.main === module) {
+// Executar se chamado diretamente ou via require
+if (require.main === module || process.argv[1].includes('index.js')) {
   const converter = new HtmlToImageConverter();
   converter.run().catch(error => {
     console.error('💥 Erro fatal:', error);

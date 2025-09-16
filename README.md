@@ -28,26 +28,22 @@ npm install
 
 ### 2️⃣ Ver Resultado Imediato (30 segundos)
 ```bash
-# Gerar 3 templates Instagram e converter para PNG
-node index.js --preset instagram --generate 3
-node index.js examples/instagram
+# Padrão: processa html-files/work e salva imagens em html-files/
+node index.js --preset instagram
 
-# Resultado: 3 imagens PNG (1080x1080) na pasta examples/instagram/
+# Resultado: imagens PNG (1080x1080) em html-files/
 ```
 
 ### 3️⃣ Testar com Seu HTML (1 minuto)
 ```bash
-# Opção 1: HTML na pasta do projeto
-# 1. Copie seu arquivo.html para a pasta do projeto
-# 2. Execute:
-node index.js ./arquivo.html --width 1200 --height 800
+# Coloque seus HTMLs em html-files/work/
+# Coloque imagens/CSS/JS em html-files/assets/
 
-# Opção 2: HTML na pasta html-files/ (recomendado)
-# 1. Copie seu arquivo.html para html-files/
-# 2. Execute:
-node index.js html-files/arquivo.html
+# Converter todos (saída vai para html-files/)
+node index.js --preset instagram
 
-# Resultado: arquivo.png na mesma pasta do HTML
+# Converter arquivo específico
+node index.js html-files/work/arquivo.html --width 1200 --height 800
 ```
 
 **🎯 Pronto! Você já tem imagens geradas. Agora pode explorar mais detalhes abaixo.**
@@ -62,11 +58,11 @@ node index.js html-files/arquivo.html
 - `examples/powerpoint/` - Slides para apresentações
 - `examples/generic/` - Formatos flexíveis
 
-### 📁 Onde Colocar Seus HTMLs:
-- **Pasta do projeto**: `./meu-arquivo.html` (caminho relativo)
-- **Pasta padrão**: `html-files/meu-arquivo.html` (recomendado)
-- **Pasta específica**: `./minha-pasta/meu-arquivo.html`
-- **Múltiplos arquivos**: `node index.js ./minha-pasta/` (converte todos)
+### 📁 Onde Colocar Seus HTMLs e Assets:
+- **HTMLs (padrão)**: `html-files/work/`
+- **Assets compartilhados**: `html-files/assets/`
+- **Como referenciar assets dentro de work**: use `./assets/...` ou `assets/...` e o sistema resolve para `../assets/...` automaticamente
+- **Imagens externas**: URLs `https://...` são suportadas; o conversor aguarda o carregamento
 
 ### 🚀 Próximos Passos:
 - **Customizar**: Ajustar dimensões, qualidade, formato
@@ -102,16 +98,14 @@ npm install
 
 ### Comandos Essenciais
 ```bash
-# Instagram (1080x1080) - Gerar e converter
-node index.js --preset instagram --generate 5
-node index.js examples/instagram
+# Instagram (1080x1080)
+node index.js --preset instagram
 
-# PowerPoint (1920x1080) - Gerar e converter
-node index.js --preset ppt --generate 3
-node index.js examples/powerpoint
+# PowerPoint (1920x1080)
+node index.js --preset ppt
 
-# Converter HTMLs existentes
-node index.js ./meus-htmls --format jpeg --quality 95
+# Converter pasta específica
+node index.js html-files/work --format jpeg --quality 95
 ```
 
 ### Scripts de Conveniência (Windows)

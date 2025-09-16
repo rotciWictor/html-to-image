@@ -12,7 +12,9 @@ Aja como um gerador de HTML estático. Sua saída será salva como arquivos .htm
 [Descreva exatamente o que gerar: quantidade de páginas/“slides”, tema, elementos obrigatórios, hierarquia visual e tipografia.]
 
 3) Context (Contexto)
-- Os assets (CSS, JS, imagens, fontes) ficam em ./assets/ e devem ser referenciados como caminhos relativos (./assets/...)
+- Os assets (CSS, JS, imagens, fontes) ficam em `html-files/assets/`
+- Dentro de `html-files/work/`, referencie como `./assets/...` (o conversor resolve para `../assets/...` automaticamente)
+- Evite dependências externas quando possível; se usar imagens externas `https://...`, o conversor aguarda o carregamento
 - Não use nenhum recurso externo (sem CDN, sem fontes/JS externos)
 - Dimensões alvo do layout: [largura]x[altura] px (fixo no container raiz)
 - Se for Instagram, respeite "zona segura": ~120 px de margem interna para textos
@@ -55,7 +57,7 @@ Aja como um gerador de HTML estático. Sua saída será salva como arquivos .htm
 Gerar 5 páginas (slides) para um carrossel do Instagram (1080x1080) com o tema “Dicas rápidas de produtividade”. Cada slide deve conter: título curto (2–5 palavras), subtítulo direto (1 linha), 1 destaque visual (box/ícone/estatística) e tipografia grande e legível. No último slide, incluir um CTA.
 
 3) Context (Contexto)
-- Assets locais em ./assets/ (CSS/JS/imagens/fontes), referenciados via caminhos relativos
+- Assets locais em `html-files/assets/`, referenciados como `./assets/...` dentro de `html-files/work/`
 - Sem recursos externos (sem CDN, sem fontes externas)
 - Dimensões alvo fixas: 1080x1080 px no container raiz
 - Respeitar zona segura (~120 px de margem interna) para textos e elementos principais
@@ -100,7 +102,7 @@ Gerar 3 slides (1920x1080) para uma apresentação “Resultados Q4” com:
 Estilo corporativo, alto contraste, espaço para logo no topo.
 
 3) Context (Contexto)
-- Assets em ./assets/ (caminhos relativos); sem CDN/externos
+- Assets em `html-files/assets/` (caminhos relativos `./assets/...` dentro de `work/`)
 - Dimensões alvo fixas: 1920x1080 px no container raiz
 - Tipografia legível em tela grande; grid de 2 colunas nos slides com conteúdo
 

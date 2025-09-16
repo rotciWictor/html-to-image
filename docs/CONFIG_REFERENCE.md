@@ -15,7 +15,7 @@ Este documento lista todas as opções disponíveis via CLI e orienta como confi
 
 - `--width N` / `--height N`
   - Dimensões da viewport, em pixels
-  - Padrão: `1200x800`
+  - Padrão: `1200x800` (ou `1080x1080` com `--preset instagram`, `1920x1080` com `--preset ppt`)
 
 - `--scale N`
   - Device scale factor (DPI virtual). Ex.: 2 para alta definição
@@ -25,29 +25,29 @@ Este documento lista todas as opções disponíveis via CLI e orienta como confi
   - Capturar página inteira ou apenas a viewport
   - Padrão: `--fullpage`
 
-## Presets sugeridos (como usar hoje)
+## Presets (implementado)
 
-Embora ainda não exista a flag `--preset` no CLI, você pode obter o mesmo efeito definindo largura/altura conforme abaixo:
-
-- Instagram Carrossel: `--width 1080 --height 1080`
-- PowerPoint Slide: `--width 1920 --height 1080`
+- `--preset instagram` → 1080x1080, PNG (padrão)
+- `--preset ppt` → 1920x1080, PNG (padrão)
 
 Exemplos:
 
 ```bash
-# Instagram (PNG)
-node html-to-image.js --width 1080 --height 1080 --format png
+# Instagram (1080x1080)
+node index.js --preset instagram
 
-# PowerPoint (PNG)
-node html-to-image.js --width 1920 --height 1080 --format png
+# PowerPoint (1920x1080)
+node index.js --preset ppt
 
 # JPEG (qualidade 90%)
-node html-to-image.js --format jpeg --quality 90
+node index.js --format jpeg --quality 90
 ```
 
 ## Boas práticas (resumo)
 
-- Coloque todos os assets em `html-files/assets/` e referencie com caminhos relativos (`./assets/...`).
+- Coloque todos os assets em `html-files/assets/`.
+- Dentro de `html-files/work/`, referencie assets como `./assets/...` ou `assets/...` — o conversor resolve automaticamente para `../assets/...`.
+- Imagens externas via `https://...` são suportadas; o conversor aguarda o carregamento das imagens antes do screenshot.
 - Para fontes, use `@font-face` e aguarde `document.fonts.ready` antes do screenshot.
 - Use unidades responsivas (`rem`, `em`, `vw`, `vh`) onde possível.
 - Evite animações em andamento no momento do screenshot; se necessário, aumente o tempo de espera.
