@@ -15,7 +15,7 @@ Este documento lista todas as opções disponíveis via CLI e orienta como confi
 
 - `--width N` / `--height N`
   - Dimensões da viewport, em pixels
-  - Padrão: `1200x800` (ou `1080x1080` com `--preset instagram`, `1920x1080` com `--preset ppt`)
+  - Padrão: `1200x800` (ou `1080x1440` com `--preset instagram`, `1920x1080` com `--preset stories` ou `--preset ppt`)
 
 - `--scale N`
   - Device scale factor (DPI virtual). Ex.: 2 para alta definição
@@ -27,14 +27,18 @@ Este documento lista todas as opções disponíveis via CLI e orienta como confi
 
 ## Presets (implementado)
 
-- `--preset instagram` → 1080x1080, PNG (padrão)
+- `--preset instagram` → 1080x1440, PNG (padrão)
+- `--preset stories` → 1920x1080, PNG (padrão)
 - `--preset ppt` → 1920x1080, PNG (padrão)
 
 Exemplos:
 
 ```bash
-# Instagram (1080x1080)
+# Instagram (1080x1440)
 node index.js --preset instagram
+
+# Stories (1920x1080)
+node index.js --preset stories
 
 # PowerPoint (1920x1080)
 node index.js --preset ppt
@@ -47,6 +51,7 @@ node index.js --format jpeg --quality 90
 
 - Coloque todos os assets em `html-files/assets/`.
 - Dentro de `html-files/work/`, referencie assets como `./assets/...` ou `assets/...` — o conversor resolve automaticamente para `../assets/...`.
+- **Imagens geradas são salvas na pasta `output/` por padrão** (criada automaticamente se não existir).
 - Imagens externas via `https://...` são suportadas; o conversor aguarda o carregamento das imagens antes do screenshot.
 - Para fontes, use `@font-face` e aguarde `document.fonts.ready` antes do screenshot.
 - Use unidades responsivas (`rem`, `em`, `vw`, `vh`) onde possível.
@@ -59,7 +64,7 @@ Estas opções são propostas e podem ser implementadas sob demanda:
 
 - `--preset instagram|ppt` aplica dimensões automaticamente
 - `--generate N` cria N HTMLs base (ex.: `ig-slide-1.html`, `ig-slide-2.html`, ...)
-- `--out-dir ./saidas` define diretório de saída das imagens
+- `--out-dir ./output` define diretório de saída das imagens (padrão: `./output`)
 - `--suffix "-slide1"` adiciona sufixo ao nome do arquivo de saída
 - `--wait-ms 2000` aguarda N ms adicionais antes do screenshot
 - `--wait-for "#root"` aguarda seletor existir antes do screenshot
@@ -114,7 +119,7 @@ Inclua no `<head>` do HTML:
 - `deviceScaleFactor`: escala (1, 2, 3, 4...)
 - `fullPage`: true | false (página completa ou apenas viewport)
 - `background`: "transparent" (PNG/WebP) ou cor (#ffffff, rgb(255,255,255), etc.)
-- `outDir`: pasta de destino (ex.: "./export", "../images")
+- `outDir`: pasta de destino (ex.: "./output", "./export", "../images")
 - `suffix`: sufixo no nome do arquivo (ex.: "-v1", "-final")
 
 ### Prioridade de configuração
@@ -138,9 +143,9 @@ Inclua no `<head>` do HTML:
     {
       "format": "png",
       "width": 1080,
-      "height": 1080,
+      "height": 1440,
       "background": "transparent",
-      "outDir": "./instagram-export",
+      "outDir": "./output",
       "suffix": "-slide1"
     }
     </script>
@@ -165,7 +170,7 @@ Inclua no `<head>` do HTML:
     <meta name="h2i:width" content="1920">
     <meta name="h2i:height" content="1080">
     <meta name="h2i:background" content="#ffffff">
-    <meta name="h2i:outDir" content="./presentation">
+    <meta name="h2i:outDir" content="./output">
     <meta name="h2i:suffix" content="-slide1">
 </head>
 <body>

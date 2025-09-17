@@ -47,6 +47,11 @@ class HtmlToImageConverter {
         return await this.createEmptyHtml(folder, options.createHtml, options);
       }
       
+      // Criar múltiplos HTMLs vazios se solicitado
+      if (options.createMultiple) {
+        return await this.createMultipleEmptyHtmls(folder, options.createMultiple, options);
+      }
+      
       // Carregar configuração do arquivo
       const fileConfig = this.configManager.loadConfig();
       
@@ -312,13 +317,61 @@ class HtmlToImageConverter {
     return { created: fileName };
   }
 
-  generateEmptyHtml(preset, options) {
+  async createMultipleEmptyHtmls(folder, count, options) {
+    console.log(`📝 Criando ${count} arquivos HTML vazios...`);
+    
+    // Garantir que a pasta existe
+    if (!fs.existsSync(folder)) {
+      fs.mkdirSync(folder, { recursive: true });
+    }
+    
+    const createdFiles = [];
+    const preset = options.preset || 'generic';
+    
+    for (let i = 1; i <= count; i++) {
+      const fileName = `slide-${i.toString().padStart(2, '0')}.html`;
+      const filePath = path.join(folder, fileName);
+      
+      // Verificar se arquivo já existe
+      if (fs.existsSync(filePath)) {
+        console.log(`⚠️  Arquivo já existe: ${fileName} (pulando)`);
+        continue;
+      }
+      
+      // Criar HTML baseado no preset
+      const htmlContent = this.generateEmptyHtml(preset, options, i);
+      
+      // Salvar arquivo
+      fs.writeFileSync(filePath, htmlContent, 'utf8');
+      createdFiles.push(fileName);
+      
+      console.log(`✅ Criado: ${fileName}`);
+    }
+    
+    console.log('');
+    console.log(`🎉 ${createdFiles.length} arquivo(s) criado(s) com sucesso!`);
+    console.log(`📝 Preset aplicado: ${preset}`);
+    console.log(`📐 Dimensões: ${options.width}x${options.height}`);
+    console.log('');
+    console.log('🎨 Próximos passos:');
+    console.log('1. Abra os arquivos HTML no seu editor');
+    console.log('2. Cole seu conteúdo em cada arquivo');
+    console.log('3. Execute: node index.js --preset ' + preset);
+    console.log('');
+    console.log('💡 Dica: Você pode copiar HTML de qualquer site e colar aqui!');
+    console.log('📁 Arquivos criados:');
+    createdFiles.forEach(file => console.log(`   - ${file}`));
+    
+    return { created: createdFiles };
+  }
+
+  generateEmptyHtml(preset, options, slideNumber = 1) {
     const baseHtml = `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Slide</title>
+    <title>Slide ${slideNumber}</title>
     
     <!-- Configuração inline para o conversor -->
     <script id="h2i-config" type="application/json">
@@ -386,7 +439,7 @@ class HtmlToImageConverter {
     <div class="container">
         <div class="content">
             <!-- COLE SEU CONTEÚDO AQUI -->
-            <h1>Seu Título Aqui</h1>
+            <h1>Slide ${slideNumber}</h1>
             <p>Cole seu conteúdo HTML aqui...</p>
             
             <!-- Exemplo de como colar conteúdo de sites: -->

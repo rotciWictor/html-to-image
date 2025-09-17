@@ -47,23 +47,23 @@ Aja como um gerador de HTML estático. Sua saída será salva como arquivos .htm
 
 ---
 
-## Prompt pronto — Carrossel Instagram (1080x1080) [copy/paste]
+## Prompt pronto — Carrossel Instagram (1080x1440) [copy/paste]
 
 ```
 1) Role (Função)
 Aja como um gerador de HTML estático. Sua saída será salva como arquivos .html locais e depois convertida em imagens por um script headless (sem acesso à internet).
 
 2) Task (Tarefa)
-Gerar 5 páginas (slides) para um carrossel do Instagram (1080x1080) com o tema “Dicas rápidas de produtividade”. Cada slide deve conter: título curto (2–5 palavras), subtítulo direto (1 linha), 1 destaque visual (box/ícone/estatística) e tipografia grande e legível. No último slide, incluir um CTA.
+Gerar 5 páginas (slides) para um carrossel do Instagram (1080x1440) com o tema "Dicas rápidas de produtividade". Cada slide deve conter: título curto (2–5 palavras), subtítulo direto (1 linha), 1 destaque visual (box/ícone/estatística) e tipografia grande e legível. No último slide, incluir um CTA.
 
 3) Context (Contexto)
 - Assets locais em `html-files/assets/`, referenciados como `./assets/...` dentro de `html-files/work/`
 - Sem recursos externos (sem CDN, sem fontes externas)
-- Dimensões alvo fixas: 1080x1080 px no container raiz
+- Dimensões alvo fixas: 1080x1440 px no container raiz
 - Respeitar zona segura (~120 px de margem interna) para textos e elementos principais
 
 4) Reasoning (Raciocínio)
-- Definir container raiz com 1080x1080 e margens internas
+- Definir container raiz com 1080x1440 e margens internas
 - Estabelecer hierarquia: título > subtítulo > destaque
 - Garantir contraste alto e legibilidade
 - Opcional: ícones/ilustrações de ./assets/ com tamanho consistente
@@ -83,7 +83,7 @@ Gerar 5 páginas (slides) para um carrossel do Instagram (1080x1080) com o tema 
 6) Stop Conditions (Condições finais)
 - 5 blocos `html` válidos e completos (slide-01.html … slide-05.html)
 - Tabela índice preenchida
-- Todos os slides com container 1080x1080, sem dependências externas
+- Todos os slides com container 1080x1440, sem dependências externas
 ```
 
 ---
@@ -176,9 +176,9 @@ O conversor pode ler configurações diretamente do HTML, sobrescrevendo as flag
 2) Coloque imagens/ícones/fontes em `html-files/assets/` e referencie como `./assets/...`.
 3) Converta para imagem:
 
-- Instagram (1080x1080, PNG):
+- Instagram (1080x1440, PNG):
 ```bash
-node html-to-image.js --width 1080 --height 1080 --format png
+node html-to-image.js --width 1080 --height 1440 --format png
 ```
 
 - PowerPoint (1920x1080, PNG):

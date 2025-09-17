@@ -11,7 +11,7 @@ Conversor profissional de arquivos HTML para imagens com arquitetura enterprise,
 
 - 🏗️ **Arquitetura Profissional**: Classes separadas seguindo princípios SOLID
 - ⚡ **CLI Robusto**: Commander.js com validação rigorosa
-- 🎨 **Presets Inteligentes**: Instagram (1080x1080), PowerPoint (1920x1080), Genérico
+- 🎨 **Presets Inteligentes**: Instagram (1080x1440), Stories (1920x1080), PowerPoint (1920x1080), Genérico
 - 🔧 **Configuração Inline**: JSON ou meta tags diretamente no HTML
 - 🧪 **34 Testes Unitários**: Cobertura completa das funcionalidades
 - 📁 **Estrutura Organizada**: Sem arquivos soltos, tudo no lugar certo
@@ -31,7 +31,7 @@ npm install
 # Padrão: processa html-files/work e salva imagens em html-files/
 node index.js --preset instagram
 
-# Resultado: imagens PNG (1080x1080) em html-files/
+# Resultado: imagens PNG (1080x1440) em output/
 ```
 
 ### 3️⃣ Testar com Seu HTML (1 minuto)
@@ -49,7 +49,8 @@ node index.js html-files/work/arquivo.html --width 1200 --height 800
 **🎯 Pronto! Você já tem imagens geradas. Agora pode explorar mais detalhes abaixo.**
 
 ### 📸 O que você vai ver:
-- **Instagram**: Imagens quadradas (1080x1080) prontas para posts
+- **Instagram**: Imagens verticais (1080x1440) prontas para posts
+- **Stories**: Imagens verticais (1920x1080) para stories do Instagram
 - **PowerPoint**: Slides horizontais (1920x1080) para apresentações  
 - **Genérico**: Formatos customizáveis para qualquer uso
 
@@ -98,8 +99,11 @@ npm install
 
 ### Comandos Essenciais
 ```bash
-# Instagram (1080x1080)
+# Instagram (1080x1440)
 node index.js --preset instagram
+
+# Stories (1920x1080)
+node index.js --preset stories
 
 # PowerPoint (1920x1080)
 node index.js --preset ppt
@@ -135,7 +139,8 @@ html-to-image/
 │   ├── CONFIG_REFERENCE.md     # Referência de configurações
 │   └── PROMPT_GUIDE.md         # Guia de prompts
 ├── 📁 examples/                # Templates prontos
-│   ├── instagram/              # Exemplos Instagram (1080x1080)
+│   ├── instagram/              # Exemplos Instagram (1080x1440)
+│   ├── stories/                # Exemplos Stories (1920x1080)
 │   ├── powerpoint/             # Exemplos PowerPoint (1920x1080)
 │   └── generic/                # Exemplos genéricos (1200x800)
 ├── 📁 scripts/                 # Scripts de automação
