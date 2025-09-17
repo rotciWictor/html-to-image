@@ -80,7 +80,7 @@ class HtmlToImageConverter {
         } else if (['.zip', '.rar'].includes(ext)) {
           // É um arquivo compactado - processar diretamente
           console.log(`📦 Processando arquivo compactado: ${path.basename(folder)}`);
-          const results = await this.imageProcessor.processArchive(folder, this.config.output.outDir);
+          const results = await this.imageProcessor.processArchive(folder, path.join(process.cwd(), 'output'));
           console.log(`✅ Conversão concluída: ${results.length} imagem(ns) gerada(s)`);
           return;
         } else {
@@ -89,6 +89,27 @@ class HtmlToImageConverter {
       } else {
         // É uma pasta - encontrar arquivos HTML
         htmlFiles = this.findHtmlFiles(folder);
+        
+        // Se não encontrou HTMLs, verificar se tem ZIPs para descompactar
+        if (htmlFiles.length === 0) {
+          const zipFiles = this.findZipFiles(folder);
+          if (zipFiles.length > 0) {
+            console.log(`📦 Encontrados ${zipFiles.length} arquivo(s) compactado(s). Descompactando...`);
+            
+            for (const zipFile of zipFiles) {
+              try {
+                const workDir = path.join(process.cwd(), 'html-files', 'work');
+                await this.imageProcessor.archiveProcessor.extract(zipFile, workDir);
+                console.log(`✅ Descompactado: ${path.basename(zipFile)}`);
+              } catch (error) {
+                console.error(`❌ Erro ao descompactar ${path.basename(zipFile)}: ${error.message}`);
+              }
+            }
+            
+            // Buscar HTMLs novamente após descompactar
+            htmlFiles = this.findHtmlFiles(folder);
+          }
+        }
       }
       
       if (htmlFiles.length === 0) {
@@ -163,6 +184,17 @@ class HtmlToImageConverter {
     const files = fs.readdirSync(folder);
     return files
       .filter(file => file.toLowerCase().endsWith('.html'))
+      .map(file => path.join(folder, file))
+      .sort();
+  }
+
+  findZipFiles(folder) {
+    const files = fs.readdirSync(folder);
+    return files
+      .filter(file => {
+        const ext = path.extname(file).toLowerCase();
+        return ['.zip', '.rar'].includes(ext);
+      })
       .map(file => path.join(folder, file))
       .sort();
   }

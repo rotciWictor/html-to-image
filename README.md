@@ -147,7 +147,7 @@ html-to-image/
 │   ├── ConfigManager.test.js   # Testes do gerenciador de config
 │   └── TemplateGenerator.test.js # Testes do gerador de templates
 ├── 📁 html-files/              # Pasta de trabalho padrão
-├── 📁 backups/                 # Backups automáticos
+├── 📁 output/                  # Imagens geradas
 └── 📄 package.json             # Configuração do projeto
 ```
 

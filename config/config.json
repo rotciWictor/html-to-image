@@ -13,11 +13,6 @@
     "quality": 100,
     "fullPage": true
   },
-  "safety": {
-    "backupHtml": true,
-    "backupFolder": "./backups",
-    "confirmDeletion": false
-  },
   "processing": {
     "parallel": true,
     "maxConcurrent": 3

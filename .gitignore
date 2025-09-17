@@ -109,7 +109,6 @@ ehthumbs.db
 Thumbs.db
 
 # Project specific
-backups/*.html
 html-files/*.png
 html-files/*.jpg
 html-files/*.jpeg
