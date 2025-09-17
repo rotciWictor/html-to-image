@@ -139,3 +139,6 @@ yarn.lock
 config/local.json
 config/development.json
 config/production.json
+
+# Local AI cookbook (não versionar)
+cookbook/

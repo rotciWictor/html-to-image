@@ -12,6 +12,7 @@ Conversor profissional de arquivos HTML para imagens com arquitetura enterprise,
 - 🏗️ **Arquitetura Profissional**: Classes separadas seguindo princípios SOLID
 - ⚡ **CLI Robusto**: Commander.js com validação rigorosa
 - 🎨 **Presets Inteligentes**: Instagram (1080x1440), Stories (1920x1080), PowerPoint (1920x1080), Genérico
+- 🧠 **AI Mode (Gemini)**: Gera HTMLs automaticamente via IA
 - 🔧 **Configuração Inline**: JSON ou meta tags diretamente no HTML
 - 🧪 **34 Testes Unitários**: Cobertura completa das funcionalidades
 - 📁 **Estrutura Organizada**: Sem arquivos soltos, tudo no lugar certo
@@ -94,6 +95,36 @@ cd html-to-image
 # Instalar dependências
 npm install
 ```
+
+## 🧠 AI Mode (Gemini) - Geração Automática
+
+### Configuração Inicial
+```bash
+# 1. Copiar arquivo de configuração
+cp .env.example .env
+
+# 2. Editar .env e adicionar sua chave do Gemini
+# Obtenha em: https://aistudio.google.com/app/apikey
+GEMINI_API_KEY=sua_chave_aqui
+```
+
+### Comandos AI
+```bash
+# Gerar 6 slides para Instagram via IA
+node index.js --ai --prompt "Crônica 001 - Beijei, mas meu pau não quis vir" --preset instagram
+
+# Gerar 4 slides para Stories
+node index.js --ai --prompt "Dicas de produtividade" --slides 4 --preset stories
+
+# Usar modelo específico
+node index.js --ai --prompt "Tema X" --model gemini-1.5-pro --preset instagram
+```
+
+### Como Funciona
+1. **IA gera HTMLs** baseado no seu prompt
+2. **Salva em** `html-files/work/ai/<timestamp>/`
+3. **Processa automaticamente** com Puppeteer
+4. **Gera imagens** em `output/ai/<timestamp>/`
 
 ## 🚀 Uso Avançado
 
