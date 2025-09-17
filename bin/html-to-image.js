@@ -11,6 +11,9 @@
  * @year 2025
  */
 
+// Carregar variáveis de ambiente primeiro
+require('dotenv').config();
+
 // Importar classes refatoradas
 const CliParser = require('../lib/CliParser');
 const ProcessingOrchestrator = require('../lib/ProcessingOrchestrator');
@@ -45,6 +48,14 @@ class HtmlToImageConverter {
       
       if (options.ai || options.prompt) {
         return await this.orchestrator.generateWithAI(folder, options);
+      }
+      
+      if (options.listDocs) {
+        return await this.orchestrator.listKnowledgeDocuments();
+      }
+      
+      if (options.searchDocs) {
+        return await this.orchestrator.searchKnowledgeDocuments(options.searchDocs);
       }
       
       // Processamento normal de pasta/arquivo

@@ -1,0 +1,33 @@
+# 🎯 EXEMPLOS DE COMO USAR SEU PROMPT
+
+## Comando básico:
+node magic.js --ai --prompt "Criar slides sobre produtividade para Instagram" --preset instagram
+
+## Com documentos específicos:
+node magic.js --ai --prompt "Criar slides sobre comunicação corporativa" --relevant-docs "metodo-ffc,manual-comunicador" --preset instagram
+
+## Para Stories (formato horizontal):
+node magic.js --ai --prompt "Criar carrossel de dicas de marketing" --preset stories --slides 4
+
+## Para PowerPoint:
+node magic.js --ai --prompt "Criar slides para apresentação sobre vendas" --preset ppt --slides 8
+
+## COM SUA CHAVE DO GEMINI:
+1. Edite o arquivo .env
+2. Coloque sua chave real: GEMINI_API_KEY=sua_chave_real_aqui
+3. Execute qualquer comando acima
+
+## ONDE O PROMPT VAI:
+- O prompt vai para a IA Gemini
+- A IA consulta sua base de conhecimento
+- Gera HTMLs baseados no seu prompt + conhecimento
+- Salva em html-files/work/ai/<timestamp>/
+- Processa automaticamente com Puppeteer
+- Gera imagens em output/ai/<timestamp>/
+
+## EXEMPLOS DE PROMPTS QUE VOCÊ PODE USAR:
+- "Criar slides sobre produtividade para Instagram"
+- "Fazer carrossel de dicas de marketing digital"
+- "Criar apresentação sobre vendas para PowerPoint"
+- "Fazer slides sobre comunicação corporativa"
+- "Criar conteúdo sobre metodologia FFC"

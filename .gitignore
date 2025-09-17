@@ -142,3 +142,9 @@ config/production.json
 
 # Local AI cookbook (não versionar)
 cookbook/
+
+# Base de conhecimento pessoal (não versionar)
+knowledge/*
+!knowledge/README.md
+!knowledge/**/README.md
+!knowledge/**/.gitkeep

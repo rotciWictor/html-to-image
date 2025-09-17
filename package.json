@@ -2,13 +2,13 @@
   "name": "html-to-image-converter",
   "version": "1.0.0",
   "description": "Converte arquivos HTML para imagens PNG com suporte a assets externos",
-  "main": "index.js",
+  "main": "magic.js",
   "bin": {
     "html-to-image": "./bin/html-to-image.js"
   },
   "scripts": {
-    "start": "node index.js",
-    "dev": "node index.js --verbose",
+    "start": "node magic.js",
+    "dev": "node magic.js --verbose",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",

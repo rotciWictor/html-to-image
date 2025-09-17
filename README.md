@@ -30,7 +30,7 @@ npm install
 ### 2️⃣ Ver Resultado Imediato (30 segundos)
 ```bash
 # Padrão: processa html-files/work e salva imagens em html-files/
-node index.js --preset instagram
+node magic.js --preset instagram
 
 # Resultado: imagens PNG (1080x1440) em output/
 ```
@@ -41,10 +41,10 @@ node index.js --preset instagram
 # Coloque imagens/CSS/JS em html-files/assets/
 
 # Converter todos (saída vai para html-files/)
-node index.js --preset instagram
+node magic.js --preset instagram
 
 # Converter arquivo específico
-node index.js html-files/work/arquivo.html --width 1200 --height 800
+node magic.js html-files/work/arquivo.html --width 1200 --height 800
 ```
 
 **🎯 Pronto! Você já tem imagens geradas. Agora pode explorar mais detalhes abaixo.**
@@ -111,36 +111,59 @@ GEMINI_API_KEY=sua_chave_aqui
 ### Comandos AI
 ```bash
 # Gerar 6 slides para Instagram via IA
-node index.js --ai --prompt "Crônica 001 - Beijei, mas meu pau não quis vir" --preset instagram
+node magic.js --ai --prompt "Crônica 001 - Beijei, mas meu pau não quis vir" --preset instagram
 
 # Gerar 4 slides para Stories
-node index.js --ai --prompt "Dicas de produtividade" --slides 4 --preset stories
+node magic.js --ai --prompt "Dicas de produtividade" --slides 4 --preset stories
 
 # Usar modelo específico
-node index.js --ai --prompt "Tema X" --model gemini-1.5-pro --preset instagram
+node magic.js --ai --prompt "Tema X" --model gemini-1.5-pro --preset instagram
+
+# Listar documentos da base de conhecimento
+node magic.js --list-docs
+
+# Buscar documentos por palavra-chave
+node magic.js --search-docs "ebook"
+
+# Usar documentos específicos na geração
+node magic.js --ai --prompt "Criar slides sobre produtividade" --relevant-docs "metodo-ffc,manual-comunicador"
 ```
 
+### Base de Conhecimento
+O sistema inclui uma base de conhecimento personalizada em `knowledge/`:
+- **`knowledge/prompts/`** - Prompts mestres para geração
+- **`knowledge/documents/`** - Documentos de referência
+
+A IA usa automaticamente esses documentos para gerar HTMLs mais precisos e contextualizados.
+
 ### Como Funciona
-1. **IA gera HTMLs** baseado no seu prompt
-2. **Salva em** `html-files/work/ai/<timestamp>/`
-3. **Processa automaticamente** com Puppeteer
-4. **Gera imagens** em `output/ai/<timestamp>/`
+1. **IA consulta base de conhecimento** para contexto
+2. **Gera HTMLs** baseado no seu prompt + conhecimento
+3. **Salva em** `html-files/work/ai/<nome-amigavel>/` (ex: `produtividade-ig-6slides-T2120`)
+4. **Processa automaticamente** com Puppeteer
+5. **Gera imagens** em `output/ai/<nome-amigavel>/`
+
+### 🏷️ Nomes de Pasta Inteligentes
+O sistema gera nomes de pasta descritivos baseados no seu prompt:
+- **Tema detectado** + **palavras-chave** + **preset** + **quantidade** + **timestamp**
+- Exemplo: `produtividade-ig-6slides-T2120` (produtividade para Instagram, 6 slides)
+- Exemplo: `marketing-digital-dicas-stories-4slides-T2120` (marketing digital para Stories, 4 slides)
 
 ## 🚀 Uso Avançado
 
 ### Comandos Essenciais
 ```bash
 # Instagram (1080x1440)
-node index.js --preset instagram
+node magic.js --preset instagram
 
 # Stories (1920x1080)
-node index.js --preset stories
+node magic.js --preset stories
 
 # PowerPoint (1920x1080)
-node index.js --preset ppt
+node magic.js --preset ppt
 
 # Converter pasta específica
-node index.js html-files/work --format jpeg --quality 95
+node magic.js html-files/work --format jpeg --quality 95
 ```
 
 ### Scripts de Conveniência (Windows)
@@ -197,21 +220,21 @@ html-to-image/
 ### 1. Agência de Marketing Digital
 ```bash
 # Campanha Instagram - 10 posts
-node index.js campaigns/black-friday --preset instagram --generate 10
-node index.js campaigns/black-friday
+node magic.js campaigns/black-friday --preset instagram --generate 10
+node magic.js campaigns/black-friday
 ```
 
 ### 2. Apresentações Corporativas
 ```bash
 # Relatório mensal - 15 slides
-node index.js reports/q4-2024 --preset ppt --generate 15
-node index.js reports/q4-2024 --format jpeg --quality 95
+node magic.js reports/q4-2024 --preset ppt --generate 15
+node magic.js reports/q4-2024 --format jpeg --quality 95
 ```
 
 ### 3. Documentação Técnica
 ```bash
 # Capturas de tela de interfaces
-node index.js docs/ui-components --width 1600 --height 900 --scale 1
+node magic.js docs/ui-components --width 1600 --height 900 --scale 1
 ```
 
 ## 🧪 Testes
