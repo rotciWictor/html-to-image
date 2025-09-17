@@ -42,6 +42,11 @@ class HtmlToImageConverter {
         return await this.generateTemplates(folder, options);
       }
       
+      // Criar HTML vazio se solicitado
+      if (options.createHtml) {
+        return await this.createEmptyHtml(folder, options.createHtml, options);
+      }
+      
       // Carregar configuração do arquivo
       const fileConfig = this.configManager.loadConfig();
       
@@ -252,6 +257,204 @@ class HtmlToImageConverter {
       return results;
     } finally {
       await this.imageProcessor.close();
+    }
+  }
+
+  async createEmptyHtml(folder, fileName, options) {
+    console.log(`📝 Criando arquivo HTML vazio: ${fileName}`);
+    
+    // Garantir que a pasta existe
+    if (!fs.existsSync(folder)) {
+      fs.mkdirSync(folder, { recursive: true });
+    }
+    
+    // Adicionar extensão .html se não tiver
+    if (!fileName.toLowerCase().endsWith('.html')) {
+      fileName += '.html';
+    }
+    
+    const filePath = path.join(folder, fileName);
+    
+    // Verificar se arquivo já existe
+    if (fs.existsSync(filePath)) {
+      console.log(`⚠️  Arquivo já existe: ${fileName}`);
+      console.log('💡 Use um nome diferente ou delete o arquivo existente');
+      return;
+    }
+    
+    // Determinar preset baseado nas opções
+    let preset = 'generic';
+    if (options.preset) {
+      preset = options.preset;
+    } else if (options.width === 1080 && options.height === 1080) {
+      preset = 'instagram';
+    } else if (options.width === 1920 && options.height === 1080) {
+      preset = 'ppt';
+    }
+    
+    // Criar HTML baseado no preset
+    const htmlContent = this.generateEmptyHtml(preset, options);
+    
+    // Salvar arquivo
+    fs.writeFileSync(filePath, htmlContent, 'utf8');
+    
+    console.log(`✅ Arquivo criado: ${filePath}`);
+    console.log(`📝 Preset aplicado: ${preset}`);
+    console.log(`📐 Dimensões: ${options.width}x${options.height}`);
+    console.log('');
+    console.log('🎨 Próximos passos:');
+    console.log('1. Abra o arquivo HTML no seu editor');
+    console.log('2. Cole seu conteúdo entre as tags <body> e </body>');
+    console.log('3. Execute: node index.js --preset ' + preset);
+    console.log('');
+    console.log('💡 Dica: Você pode copiar HTML de qualquer site e colar aqui!');
+    
+    return { created: fileName };
+  }
+
+  generateEmptyHtml(preset, options) {
+    const baseHtml = `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Slide</title>
+    
+    <!-- Configuração inline para o conversor -->
+    <script id="h2i-config" type="application/json">
+    {
+      "format": "${options.format || 'png'}",
+      "quality": ${options.quality || 90},
+      "width": ${options.width || 1200},
+      "height": ${options.height || 800},
+      "background": "${options.background || 'transparent'}",
+      "deviceScaleFactor": ${options.scale || 2},
+      "fullPage": ${options.fullpage !== false}
+    }
+    </script>
+    
+    <style>
+        /* Estilos globais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            text-align: center;
+            max-width: 90%;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .content {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        
+        /* Estilos específicos por preset */
+        ${this.getPresetStyles(preset)}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <!-- COLE SEU CONTEÚDO AQUI -->
+            <h1>Seu Título Aqui</h1>
+            <p>Cole seu conteúdo HTML aqui...</p>
+            
+            <!-- Exemplo de como colar conteúdo de sites: -->
+            <!-- 
+            <div class="exemplo">
+                <h2>Exemplo de conteúdo</h2>
+                <ul>
+                    <li>Item 1</li>
+                    <li>Item 2</li>
+                    <li>Item 3</li>
+                </ul>
+            </div>
+            -->
+        </div>
+    </div>
+</body>
+</html>`;
+
+    return baseHtml;
+  }
+
+  getPresetStyles(preset) {
+    switch (preset) {
+      case 'instagram':
+        return `
+        .container {
+            width: 1080px;
+            height: 1080px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }`;
+        
+      case 'ppt':
+        return `
+        .container {
+            width: 1920px;
+            height: 1080px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }`;
+        
+      default:
+        return `
+        .container {
+            width: 1200px;
+            height: 800px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }`;
     }
   }
 }
