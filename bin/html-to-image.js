@@ -33,7 +33,7 @@ class HtmlToImageConverter {
       // Parse CLI arguments
       const { folder, options } = this.cliParser.parse();
       
-      console.log('🎯 HTML to Image Converter v2.1');
+      console.log('🎯 HTML to Image Converter v1.0');
       console.log('='.repeat(50));
       console.log(`📁 Pasta de trabalho: ${folder}`);
       
