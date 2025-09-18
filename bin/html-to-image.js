@@ -62,7 +62,7 @@ class HtmlToImageConverter {
       const stats = await this.orchestrator.processFolder(folder, options);
       
       // Mostrar exemplos de uso se for primeira execução
-      if (stats && stats.successful > 0 && !options.verbose) {
+      if (stats && typeof stats.successful === 'number' && stats.successful >= 0 && !options.verbose) {
         console.log('\n' + this.cliParser.getUsageExamples());
       }
       

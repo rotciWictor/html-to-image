@@ -157,8 +157,8 @@ describe('ConfigManager', () => {
   describe('loadConfig', () => {
     test('deve carregar configuração de arquivo existente', () => {
       const mockConfig = { viewport: { width: 1920 } };
-      fs.existsSync.mockReturnValue(true);
-      fs.readFileSync.mockReturnValue(JSON.stringify(mockConfig));
+      jest.spyOn(fs, 'existsSync').mockReturnValue(true);
+      jest.spyOn(fs, 'readFileSync').mockReturnValue(JSON.stringify(mockConfig));
 
       const result = configManager.loadConfig('test-config.json');
       
@@ -167,7 +167,7 @@ describe('ConfigManager', () => {
     });
 
     test('deve retornar configuração padrão se arquivo não existir', () => {
-      fs.existsSync.mockReturnValue(false);
+      jest.spyOn(fs, 'existsSync').mockReturnValue(false);
 
       const result = configManager.loadConfig('non-existent.json');
       

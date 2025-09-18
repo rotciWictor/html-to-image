@@ -49,8 +49,8 @@ node index.js --format jpeg --quality 90
 
 ## Boas práticas (resumo)
 
-- Coloque todos os assets em `html-files/assets/`.
-- Dentro de `html-files/work/`, referencie assets como `./assets/...` ou `assets/...` — o conversor resolve automaticamente para `../assets/...`.
+- Coloque todos os assets em `work/assets/`.
+- Dentro de `work/htmls/`, referencie assets como `./assets/...` ou `assets/...` — o conversor resolve automaticamente para `../assets/...`.
 - **Imagens geradas são salvas na pasta `output/` por padrão** (criada automaticamente se não existir).
 - Imagens externas via `https://...` são suportadas; o conversor aguarda o carregamento das imagens antes do screenshot.
 - Para fontes, use `@font-face` e aguarde `document.fonts.ready` antes do screenshot.

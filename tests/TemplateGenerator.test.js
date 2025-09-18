@@ -15,9 +15,9 @@ describe('TemplateGenerator', () => {
 
   describe('generateTemplates', () => {
     beforeEach(() => {
-      fs.existsSync.mockReturnValue(true);
-      fs.mkdirSync.mockImplementation(() => {});
-      fs.writeFileSync.mockImplementation(() => {});
+      jest.spyOn(fs, 'existsSync').mockReturnValue(true);
+      jest.spyOn(fs, 'mkdirSync').mockImplementation(() => {});
+      jest.spyOn(fs, 'writeFileSync').mockImplementation(() => {});
     });
 
     test('deve gerar templates Instagram', () => {
@@ -66,7 +66,7 @@ describe('TemplateGenerator', () => {
     test('deve gerar HTML válido para Instagram', () => {
       const config = { 
         width: 1080, 
-        height: 1080, 
+        height: 1440, 
         format: 'png', 
         slideNumber: 1, 
         totalSlides: 5 
@@ -76,6 +76,7 @@ describe('TemplateGenerator', () => {
       
       expect(html).toContain('<!DOCTYPE html>');
       expect(html).toContain('1080px');
+      expect(html).toContain('1440px');
       expect(html).toContain('h2i-config');
       expect(html).toContain('"format": "png"');
       expect(html).toContain('1/5');
@@ -86,7 +87,7 @@ describe('TemplateGenerator', () => {
         slideNumber: 5, 
         totalSlides: 5,
         width: 1080,
-        height: 1080
+        height: 1440
       };
       
       const html = generator.getInstagramTemplate(config);
@@ -99,7 +100,7 @@ describe('TemplateGenerator', () => {
         slideNumber: 2, 
         totalSlides: 5,
         width: 1080,
-        height: 1080
+        height: 1440
       };
       
       const html = generator.getInstagramTemplate(config);
@@ -167,6 +168,7 @@ describe('TemplateGenerator', () => {
 
   describe('createSampleAssets', () => {
     test('deve criar arquivos de assets', () => {
+      jest.spyOn(fs, 'writeFileSync').mockImplementation(() => {});
       generator.createSampleAssets('./test-assets');
       
       expect(fs.writeFileSync).toHaveBeenCalledTimes(3);

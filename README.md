@@ -1,9 +1,9 @@
-# HTML to Image Converter v1.0 🚀
+# HTML to Image Converter v2.0.0 🚀
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/html-to-image-converter/html-to-image)
+[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/html-to-image-converter/html-to-image)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Node](https://img.shields.io/badge/node-%3E%3D14.0.0-brightgreen.svg)](https://nodejs.org/)
-[![Tests](https://img.shields.io/badge/tests-34%20passing-brightgreen.svg)](#testes)
+[![Node](https://img.shields.io/badge/node-%3E%3D18.18.0-brightgreen.svg)](https://nodejs.org/)
+[![Tests](https://img.shields.io/badge/tests-49%20passing-brightgreen.svg)](#testes)
 
 Conversor profissional de arquivos HTML para imagens com arquitetura enterprise, CLI robusto e configuração flexível.
 
@@ -14,7 +14,7 @@ Conversor profissional de arquivos HTML para imagens com arquitetura enterprise,
 - 🎨 **Presets Inteligentes**: Instagram (1080x1440), Stories (1920x1080), PowerPoint (1920x1080), Genérico
 - 🧠 **AI Mode (Gemini)**: Gera HTMLs automaticamente via IA
 - 🔧 **Configuração Inline**: JSON ou meta tags diretamente no HTML
-- 🧪 **34 Testes Unitários**: Cobertura completa das funcionalidades
+- 🧪 **49 Testes Unitários**: Cobertura completa das funcionalidades
 - 📁 **Estrutura Organizada**: Sem arquivos soltos, tudo no lugar certo
 
 ## ⚡ Quick Start - Ver Resultado em 2 Minutos
@@ -29,22 +29,22 @@ npm install
 
 ### 2️⃣ Ver Resultado Imediato (30 segundos)
 ```bash
-# Padrão: processa html-files/work e salva imagens em html-files/
-node magic.js --preset instagram
+# Padrão: processa work/htmls e salva imagens em output/
+h2i --preset instagram
 
 # Resultado: imagens PNG (1080x1440) em output/
 ```
 
 ### 3️⃣ Testar com Seu HTML (1 minuto)
 ```bash
-# Coloque seus HTMLs em html-files/work/
-# Coloque imagens/CSS/JS em html-files/assets/
+# Coloque seus HTMLs em work/htmls/
+# Coloque imagens/CSS/JS em work/assets/
 
-# Converter todos (saída vai para html-files/)
-node magic.js --preset instagram
+# Converter todos (saída vai para output/)
+h2i --preset instagram
 
 # Converter arquivo específico
-node magic.js html-files/work/arquivo.html --width 1200 --height 800
+h2i work/htmls/arquivo.html --width 1200 --height 800
 ```
 
 **🎯 Pronto! Você já tem imagens geradas. Agora pode explorar mais detalhes abaixo.**
@@ -61,8 +61,8 @@ node magic.js html-files/work/arquivo.html --width 1200 --height 800
 - `examples/generic/` - Formatos flexíveis
 
 ### 📁 Onde Colocar Seus HTMLs e Assets:
-- **HTMLs (padrão)**: `html-files/work/`
-- **Assets compartilhados**: `html-files/assets/`
+- **HTMLs (padrão)**: `work/htmls/`
+- **Assets compartilhados**: `work/assets/`
 - **Como referenciar assets dentro de work**: use `./assets/...` ou `assets/...` e o sistema resolve para `../assets/...` automaticamente
 - **Imagens externas**: URLs `https://...` são suportadas; o conversor aguarda o carregamento
 
@@ -111,22 +111,22 @@ GEMINI_API_KEY=sua_chave_aqui
 ### Comandos AI
 ```bash
 # Gerar 6 slides para Instagram via IA
-node magic.js --ai --prompt "Crônica 001 - Beijei, mas meu pau não quis vir" --preset instagram
+h2i --ai --prompt "Crônica 001 - Beijei, mas meu pau não quis vir" --preset instagram
 
 # Gerar 4 slides para Stories
-node magic.js --ai --prompt "Dicas de produtividade" --slides 4 --preset stories
+h2i --ai --prompt "Dicas de produtividade" --slides 4 --preset stories
 
 # Usar modelo específico
-node magic.js --ai --prompt "Tema X" --model gemini-1.5-pro --preset instagram
+h2i --ai --prompt "Tema X" --model gemini-1.5-pro --preset instagram
 
 # Listar documentos da base de conhecimento
-node magic.js --list-docs
+h2i --list-docs
 
 # Buscar documentos por palavra-chave
-node magic.js --search-docs "ebook"
+h2i --search-docs "ebook"
 
 # Usar documentos específicos na geração
-node magic.js --ai --prompt "Criar slides sobre produtividade" --relevant-docs "metodo-ffc,manual-comunicador"
+h2i --ai --prompt "Criar slides sobre produtividade" --relevant-docs "metodo-ffc,manual-comunicador"
 ```
 
 ### Base de Conhecimento
@@ -138,10 +138,10 @@ A IA usa automaticamente esses documentos para gerar HTMLs mais precisos e conte
 
 ### Como Funciona
 1. **IA consulta base de conhecimento** para contexto
-2. **Gera HTMLs** baseado no seu prompt + conhecimento
-3. **Salva em** `html-files/work/ai/<nome-amigavel>/` (ex: `produtividade-ig-6slides-T2120`)
-4. **Processa automaticamente** com Puppeteer
-5. **Gera imagens** em `output/ai/<nome-amigavel>/`
+    2. **Gera HTMLs** baseado no seu prompt + conhecimento
+    3. **Salva em** `work/htmls/ai/<nome-amigavel>/` (ex: `produtividade-ig-6slides-T2120`)
+    4. **Processa automaticamente** com Puppeteer
+    5. **Gera imagens** em `output/ai/<nome-amigavel>/`
 
 ### 🏷️ Nomes de Pasta Inteligentes
 O sistema gera nomes de pasta descritivos baseados no seu prompt:
@@ -154,16 +154,16 @@ O sistema gera nomes de pasta descritivos baseados no seu prompt:
 ### Comandos Essenciais
 ```bash
 # Instagram (1080x1440)
-node magic.js --preset instagram
+h2i --preset instagram
 
 # Stories (1920x1080)
-node magic.js --preset stories
+h2i --preset stories
 
 # PowerPoint (1920x1080)
-node magic.js --preset ppt
+h2i --preset ppt
 
 # Converter pasta específica
-node magic.js html-files/work --format jpeg --quality 95
+h2i work/htmls --format jpeg --quality 95
 ```
 
 ### Scripts de Conveniência (Windows)
@@ -205,7 +205,12 @@ html-to-image/
 │   ├── CliParser.test.js       # Testes do CLI parser
 │   ├── ConfigManager.test.js   # Testes do gerenciador de config
 │   └── TemplateGenerator.test.js # Testes do gerador de templates
-├── 📁 html-files/              # Pasta de trabalho padrão
+├── 📁 work/                    # Pasta de trabalho unificada
+│   ├── 📁 htmls/               # Seus HTMLs para conversão
+│   ├── 📁 prompts/             # Prompts grandes e complexos
+│   └── 📁 assets/              # Assets compartilhados (imagens, CSS, JS)
+├── 📁 work/                    # Pasta de trabalho unificada
+│   └── 📁 examples/            # Exemplos de HTMLs
 ├── 📁 output/                  # Imagens geradas
 └── 📄 package.json             # Configuração do projeto
 ```
@@ -220,21 +225,21 @@ html-to-image/
 ### 1. Agência de Marketing Digital
 ```bash
 # Campanha Instagram - 10 posts
-node magic.js campaigns/black-friday --preset instagram --generate 10
-node magic.js campaigns/black-friday
+h2i campaigns/black-friday --preset instagram --generate 10
+h2i campaigns/black-friday
 ```
 
 ### 2. Apresentações Corporativas
 ```bash
 # Relatório mensal - 15 slides
-node magic.js reports/q4-2024 --preset ppt --generate 15
-node magic.js reports/q4-2024 --format jpeg --quality 95
+h2i reports/q4-2024 --preset ppt --generate 15
+h2i reports/q4-2024 --format jpeg --quality 95
 ```
 
 ### 3. Documentação Técnica
 ```bash
 # Capturas de tela de interfaces
-node magic.js docs/ui-components --width 1600 --height 900 --scale 1
+h2i docs/ui-components --width 1600 --height 900 --scale 1
 ```
 
 ## 🧪 Testes
@@ -253,7 +258,7 @@ npm run test:coverage
 scripts\test.bat
 ```
 
-**Cobertura Atual**: 34 testes passando ✅
+**Cobertura Atual**: 49 testes passando ✅
 
 ## 🔧 API Programática
 

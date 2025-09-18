@@ -148,3 +148,8 @@ knowledge/*
 !knowledge/README.md
 !knowledge/**/README.md
 !knowledge/**/.gitkeep
+
+# Pasta de trabalho (não versionar)
+work/*
+!work/README.md
+!work/**/.gitkeep

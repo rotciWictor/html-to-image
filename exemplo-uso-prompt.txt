@@ -21,7 +21,7 @@ node magic.js --ai --prompt "Criar slides para apresentação sobre vendas" --pr
 - O prompt vai para a IA Gemini
 - A IA consulta sua base de conhecimento
 - Gera HTMLs baseados no seu prompt + conhecimento
-- Salva em html-files/work/ai/<timestamp>/
+- Salva em work/htmls/ai/<timestamp>/
 - Processa automaticamente com Puppeteer
 - Gera imagens em output/ai/<timestamp>/
 
