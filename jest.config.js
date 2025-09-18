@@ -19,7 +19,7 @@ module.exports = {
   testEnvironment: 'node',
 
   // Timeout para testes longos (Puppeteer)
-  testTimeout: 30000,
+  testTimeout: 10000,
 
   // Configurações de verbose
   verbose: true,
@@ -35,7 +35,7 @@ module.exports = {
     '/node_modules/',
     '/coverage/',
     '/examples/',
-    '/html-files/'
+    '/work/'
   ],
 
   // Configurações específicas do projeto
@@ -48,5 +48,8 @@ module.exports = {
   clearMocks: true,
 
   // Restaurar mocks automaticamente
-  restoreMocks: true
+  restoreMocks: true,
+
+  // Forçar saída do Jest após testes
+  forceExit: true
 };

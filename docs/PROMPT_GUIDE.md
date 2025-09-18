@@ -12,8 +12,8 @@ Aja como um gerador de HTML estático. Sua saída será salva como arquivos .htm
 [Descreva exatamente o que gerar: quantidade de páginas/“slides”, tema, elementos obrigatórios, hierarquia visual e tipografia.]
 
 3) Context (Contexto)
-- Os assets (CSS, JS, imagens, fontes) ficam em `html-files/assets/`
-- Dentro de `html-files/work/`, referencie como `./assets/...` (o conversor resolve para `../assets/...` automaticamente)
+- Os assets (CSS, JS, imagens, fontes) ficam em `work/assets/`
+- Dentro de `work/htmls/`, referencie como `./assets/...` (o conversor resolve para `../assets/...` automaticamente)
 - Evite dependências externas quando possível; se usar imagens externas `https://...`, o conversor aguarda o carregamento
 - Não use nenhum recurso externo (sem CDN, sem fontes/JS externos)
 - Dimensões alvo do layout: [largura]x[altura] px (fixo no container raiz)
@@ -57,7 +57,7 @@ Aja como um gerador de HTML estático. Sua saída será salva como arquivos .htm
 Gerar 5 páginas (slides) para um carrossel do Instagram (1080x1440) com o tema "Dicas rápidas de produtividade". Cada slide deve conter: título curto (2–5 palavras), subtítulo direto (1 linha), 1 destaque visual (box/ícone/estatística) e tipografia grande e legível. No último slide, incluir um CTA.
 
 3) Context (Contexto)
-- Assets locais em `html-files/assets/`, referenciados como `./assets/...` dentro de `html-files/work/`
+- Assets locais em `work/assets/`, referenciados como `./assets/...` dentro de `work/htmls/`
 - Sem recursos externos (sem CDN, sem fontes externas)
 - Dimensões alvo fixas: 1080x1440 px no container raiz
 - Respeitar zona segura (~120 px de margem interna) para textos e elementos principais
@@ -102,7 +102,7 @@ Gerar 3 slides (1920x1080) para uma apresentação “Resultados Q4” com:
 Estilo corporativo, alto contraste, espaço para logo no topo.
 
 3) Context (Contexto)
-- Assets em `html-files/assets/` (caminhos relativos `./assets/...` dentro de `work/`)
+- Assets em `work/assets/` (caminhos relativos `./assets/...` dentro de `work/htmls/`)
 - Dimensões alvo fixas: 1920x1080 px no container raiz
 - Tipografia legível em tela grande; grid de 2 colunas nos slides com conteúdo
 
@@ -172,8 +172,8 @@ O conversor pode ler configurações diretamente do HTML, sobrescrevendo as flag
 
 ## Como usar com este projeto
 
-1) Salve os arquivos gerados pelo prompt em `html-files/` (ex.: `slide-01.html`, `ppt-slide-01.html`).
-2) Coloque imagens/ícones/fontes em `html-files/assets/` e referencie como `./assets/...`.
+1) Salve os arquivos gerados pelo prompt em `work/htmls/` (ex.: `slide-01.html`, `ppt-slide-01.html`).
+2) Coloque imagens/ícones/fontes em `work/assets/` e referencie como `./assets/...`.
 3) Converta para imagem:
 
 - Instagram (1080x1440, PNG):
