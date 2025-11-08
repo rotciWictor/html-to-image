@@ -7,8 +7,13 @@
     "h2i": "./bin/html-to-image.js"
   },
   "scripts": {
+    "h2i": "node bin/html-to-image.js",
     "start": "node magic.js",
     "dev": "node magic.js --verbose",
+    "preview": "node scripts/generate-preview.js",
+    "preview:serve": "node scripts/serve-preview.js",
+    "preview:open": "node scripts/open-preview.js",
+    "clean:markings": "node scripts/clean-html-markings.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",

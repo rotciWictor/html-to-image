@@ -127,6 +127,18 @@ h2i --search-docs "ebook"
 
 # Usar documentos específicos na geração
 h2i --ai --prompt "Criar slides sobre produtividade" --relevant-docs "metodo-ffc,manual-comunicador"
+
+# Usar IA com Ollama (GPT-OSS local)
+h2i --ai --provider ollama --model gpt-oss:latest --prompt "Dicas de produtividade" --preset instagram
+
+# Ou mais simples (gpt-oss:latest é o padrão do Ollama agora)
+h2i --ai --provider ollama --prompt "Dicas de produtividade" --preset instagram
+
+# Usar IA com OpenAI-compatível (WIP - não testado)
+set OPENAI_API_KEY=sk-... && h2i --ai --provider openai --model gpt-4o-mini --prompt "Marketing Digital" --preset instagram
+
+# Exemplo com LocalAI ou outro provedor compatível
+set OPENAI_API_KEY=your-key && set OPENAI_BASE_URL=http://localhost:8080/v1 && h2i --ai --provider openai --prompt "Tema"
 ```
 
 ### Base de Conhecimento
