@@ -161,6 +161,67 @@ O sistema gera nomes de pasta descritivos baseados no seu prompt:
 - Exemplo: `produtividade-ig-6slides-T2120` (produtividade para Instagram, 6 slides)
 - Exemplo: `marketing-digital-dicas-stories-4slides-T2120` (marketing digital para Stories, 4 slides)
 
+## 🌍 Tradução Automática com IA
+
+### Como Funciona
+O sistema pode traduzir automaticamente todos os textos dos seus arquivos HTML usando IA antes de converter para imagens. Funciona com qualquer provedor de IA configurado (Gemini, Ollama, OpenAI).
+
+> **Guia de códigos de idioma (ISO 639‑1):** veja `docs/ISO_639_LANG_CODES.md` para uma colinha dos códigos mais comuns (`en`, `es`, `fr`, `de`, `ja`, etc.).
+
+### Comandos de Tradução
+```bash
+# Traduzir para inglês
+h2i --translate en
+
+# Traduzir para espanhol
+h2i --translate es
+
+# Traduzir para francês
+h2i --translate fr
+
+# Traduzir especificando idioma de origem
+h2i --translate en --source-lang pt
+
+# Traduzir e converter para imagem em um comando
+h2i --translate en --preset instagram
+
+# Traduzir usando Ollama (local)
+h2i --translate en --provider ollama
+
+# Traduzir usando OpenAI
+h2i --translate es --provider openai --model gpt-4o-mini
+```
+
+### Idiomas Suportados
+- `en` - Inglês
+- `es` - Espanhol
+- `fr` - Francês
+- `pt` - Português
+- `de` - Alemão
+- `it` - Italiano
+- `ja` - Japonês
+- `zh` - Chinês
+- `ru` - Russo
+- `ko` - Coreano
+
+### Como Funciona a Tradução
+1. **Extrai textos** do HTML (ignora scripts, styles, comentários)
+2. **Traduz usando IA** (Gemini, Ollama ou OpenAI)
+3. **Substitui textos** mantendo estrutura HTML intacta
+4. **Salva arquivos traduzidos** com sufixo do idioma (ex: `17-en.html`)
+5. **Processa normalmente** para gerar imagens traduzidas
+
+### Exemplo Prático
+```bash
+# Você tem arquivos em português em work/htmls/
+# Traduzir todos para inglês e gerar imagens
+h2i --translate en --preset instagram
+
+# Resultado:
+# - work/htmls/17-en.html (traduzido)
+# - output/17-en.png (imagem traduzida)
+```
+
 ## 🚀 Uso Avançado
 
 ### Comandos Essenciais
