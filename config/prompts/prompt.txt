@@ -25,6 +25,13 @@ Sistema de conversão: Puppeteer headless, sem acesso à internet durante o proc
 Suporte a SVG: Limitado, sempre fornecer fallback em PNG
 Otimização: Foco em performance e compatibilidade máxima
 
+GERAÇÃO DE IMAGENS POR IA (Recurso Especial):
+Quando o design precisar de uma imagem artística que NÃO é possível criar com HTML/CSS puro (fundos fotográficos, ilustrações, texturas complexas, paisagens), você pode solicitar a geração usando o marcador especial:
+[GERAR_IMAGEM: descrição detalhada da imagem em inglês]
+Exemplo: [GERAR_IMAGEM: futuristic cyberpunk city skyline at sunset, neon lights, dark purple sky, photorealistic]
+O sistema irá gerar a imagem automaticamente e salvá-la em ./assets/. Use o caminho retornado no seu CSS (background-image) ou HTML (img src).
+IMPORTANTE: Escreva o prompt de imagem em INGLÊS para melhores resultados. Seja detalhado na descrição visual.
+
 Configuração Inline Recomendada (JSON):
 <script id="h2i-config" type="application/json">
 {
