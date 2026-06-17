@@ -60,7 +60,7 @@
     "README.md"
   ],
   "dependencies": {
-    "@google/generative-ai": "^0.24.1",
+    "@google/genai": "^2.8.0",
     "commander": "^14.0.1",
     "dotenv": "^16.4.5",
     "express": "^5.1.0",
