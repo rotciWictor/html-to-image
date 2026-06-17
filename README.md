@@ -1,9 +1,9 @@
-# HTML to Image Converter v1.0 🚀
+# HTML to Image Converter v2.0.0 🚀
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/html-to-image-converter/html-to-image)
+[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/html-to-image-converter/html-to-image)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Node](https://img.shields.io/badge/node-%3E%3D14.0.0-brightgreen.svg)](https://nodejs.org/)
-[![Tests](https://img.shields.io/badge/tests-34%20passing-brightgreen.svg)](#testes)
+[![Node](https://img.shields.io/badge/node-%3E%3D18.18.0-brightgreen.svg)](https://nodejs.org/)
+[![Tests](https://img.shields.io/badge/tests-49%20passing-brightgreen.svg)](#testes)
 
 Conversor profissional de arquivos HTML para imagens com arquitetura enterprise, CLI robusto e configuração flexível.
 
@@ -12,8 +12,9 @@ Conversor profissional de arquivos HTML para imagens com arquitetura enterprise,
 - 🏗️ **Arquitetura Profissional**: Classes separadas seguindo princípios SOLID
 - ⚡ **CLI Robusto**: Commander.js com validação rigorosa
 - 🎨 **Presets Inteligentes**: Instagram (1080x1440), Stories (1920x1080), PowerPoint (1920x1080), Genérico
+- 🧠 **AI Mode (Gemini)**: Gera HTMLs automaticamente via IA
 - 🔧 **Configuração Inline**: JSON ou meta tags diretamente no HTML
-- 🧪 **34 Testes Unitários**: Cobertura completa das funcionalidades
+- 🧪 **49 Testes Unitários**: Cobertura completa das funcionalidades
 - 📁 **Estrutura Organizada**: Sem arquivos soltos, tudo no lugar certo
 
 ## ⚡ Quick Start - Ver Resultado em 2 Minutos
@@ -28,22 +29,22 @@ npm install
 
 ### 2️⃣ Ver Resultado Imediato (30 segundos)
 ```bash
-# Padrão: processa html-files/work e salva imagens em html-files/
-node index.js --preset instagram
+# Padrão: processa work/htmls e salva imagens em output/
+h2i --preset instagram
 
 # Resultado: imagens PNG (1080x1440) em output/
 ```
 
 ### 3️⃣ Testar com Seu HTML (1 minuto)
 ```bash
-# Coloque seus HTMLs em html-files/work/
-# Coloque imagens/CSS/JS em html-files/assets/
+# Coloque seus HTMLs em work/htmls/
+# Coloque imagens/CSS/JS em work/assets/
 
-# Converter todos (saída vai para html-files/)
-node index.js --preset instagram
+# Converter todos (saída vai para output/)
+h2i --preset instagram
 
 # Converter arquivo específico
-node index.js html-files/work/arquivo.html --width 1200 --height 800
+h2i work/htmls/arquivo.html --width 1200 --height 800
 ```
 
 **🎯 Pronto! Você já tem imagens geradas. Agora pode explorar mais detalhes abaixo.**
@@ -60,8 +61,8 @@ node index.js html-files/work/arquivo.html --width 1200 --height 800
 - `examples/generic/` - Formatos flexíveis
 
 ### 📁 Onde Colocar Seus HTMLs e Assets:
-- **HTMLs (padrão)**: `html-files/work/`
-- **Assets compartilhados**: `html-files/assets/`
+- **HTMLs (padrão)**: `work/htmls/`
+- **Assets compartilhados**: `work/assets/`
 - **Como referenciar assets dentro de work**: use `./assets/...` ou `assets/...` e o sistema resolve para `../assets/...` automaticamente
 - **Imagens externas**: URLs `https://...` são suportadas; o conversor aguarda o carregamento
 
@@ -95,21 +96,160 @@ cd html-to-image
 npm install
 ```
 
+## 🧠 AI Mode (Gemini) - Geração Automática
+
+### Configuração Inicial
+```bash
+# 1. Copiar arquivo de configuração
+cp .env.example .env
+
+# 2. Editar .env e adicionar sua chave do Gemini
+# Obtenha em: https://aistudio.google.com/app/apikey
+GEMINI_API_KEY=sua_chave_aqui
+```
+
+### Comandos AI
+```bash
+# Gerar 6 slides para Instagram via IA
+h2i --ai --prompt "Crônica 001 - Beijei, mas meu pau não quis vir" --preset instagram
+
+# Gerar 4 slides para Stories
+h2i --ai --prompt "Dicas de produtividade" --slides 4 --preset stories
+
+# Usar modelo específico
+h2i --ai --prompt "Tema X" --model gemini-1.5-pro --preset instagram
+
+# Listar documentos da base de conhecimento
+h2i --list-docs
+
+# Buscar documentos por palavra-chave
+h2i --search-docs "ebook"
+
+# Usar documentos específicos na geração
+h2i --ai --prompt "Criar slides sobre produtividade" --relevant-docs "metodo-ffc,manual-comunicador"
+
+# Usar IA com Ollama (GPT-OSS local)
+h2i --ai --provider ollama --model gpt-oss:latest --prompt "Dicas de produtividade" --preset instagram
+
+# Ou mais simples (gpt-oss:latest é o padrão do Ollama agora)
+h2i --ai --provider ollama --prompt "Dicas de produtividade" --preset instagram
+
+# Usar IA com OpenAI-compatível (WIP - não testado)
+set OPENAI_API_KEY=sk-... && h2i --ai --provider openai --model gpt-4o-mini --prompt "Marketing Digital" --preset instagram
+
+# Exemplo com LocalAI ou outro provedor compatível
+set OPENAI_API_KEY=your-key && set OPENAI_BASE_URL=http://localhost:8080/v1 && h2i --ai --provider openai --prompt "Tema"
+```
+
+### Base de Conhecimento
+O sistema inclui uma base de conhecimento personalizada em `knowledge/`:
+- **`knowledge/prompts/`** - Prompts mestres para geração
+- **`knowledge/documents/`** - Documentos de referência
+
+A IA usa automaticamente esses documentos para gerar HTMLs mais precisos e contextualizados.
+
+### Como Funciona
+1. **IA consulta base de conhecimento** para contexto
+    2. **Gera HTMLs** baseado no seu prompt + conhecimento
+    3. **Salva em** `work/htmls/ai/<nome-amigavel>/` (ex: `produtividade-ig-6slides-T2120`)
+    4. **Processa automaticamente** com Puppeteer
+    5. **Gera imagens** em `output/ai/<nome-amigavel>/`
+
+### 🏷️ Nomes de Pasta Inteligentes
+O sistema gera nomes de pasta descritivos baseados no seu prompt:
+- **Tema detectado** + **palavras-chave** + **preset** + **quantidade** + **timestamp**
+- Exemplo: `produtividade-ig-6slides-T2120` (produtividade para Instagram, 6 slides)
+- Exemplo: `marketing-digital-dicas-stories-4slides-T2120` (marketing digital para Stories, 4 slides)
+
+## 🌍 Tradução Automática com IA
+
+### Como Funciona
+O sistema pode traduzir automaticamente todos os textos dos seus arquivos HTML usando IA antes de converter para imagens. Funciona com qualquer provedor de IA configurado (Gemini, Ollama, OpenAI).
+
+> **Guia de códigos de idioma (ISO 639‑1):** veja `docs/ISO_639_LANG_CODES.md` para uma colinha dos códigos mais comuns (`en`, `es`, `fr`, `de`, `ja`, etc.).
+
+### Comandos de Tradução
+```bash
+# Traduzir para inglês
+h2i --translate en
+
+# Traduzir para espanhol
+h2i --translate es
+
+# Traduzir para francês
+h2i --translate fr
+
+# Traduzir especificando idioma de origem
+h2i --translate en --source-lang pt
+
+# Traduzir e converter para imagem em um comando
+h2i --translate en --preset instagram
+
+# Traduzir usando Ollama (local)
+h2i --translate en --provider ollama
+
+# Traduzir usando OpenAI
+h2i --translate es --provider openai --model gpt-4o-mini
+```
+
+### Idiomas Suportados
+- `en` - Inglês
+- `es` - Espanhol
+- `fr` - Francês
+- `pt` - Português
+- `de` - Alemão
+- `it` - Italiano
+- `ja` - Japonês
+- `zh` - Chinês
+- `ru` - Russo
+- `ko` - Coreano
+
+### Como Funciona a Tradução
+1. **Extrai textos** do HTML (ignora scripts, styles, comentários)
+2. **Traduz usando IA** (Gemini, Ollama ou OpenAI)
+3. **Substitui textos** mantendo estrutura HTML intacta
+4. **Salva arquivos traduzidos** com sufixo do idioma (ex: `17-en.html`)
+5. **Processa normalmente** para gerar imagens traduzidas
+
+### Exemplo Prático
+```bash
+# Você tem arquivos em português em work/htmls/
+# Traduzir todos para inglês e gerar imagens
+h2i --translate en --preset instagram
+
+# Resultado:
+# - work/htmls/17-en.html (traduzido)
+# - output/17-en.png (imagem traduzida)
+```
+
 ## 🚀 Uso Avançado
 
 ### Comandos Essenciais
 ```bash
 # Instagram (1080x1440)
-node index.js --preset instagram
+h2i --preset instagram
 
 # Stories (1920x1080)
-node index.js --preset stories
+h2i --preset stories
 
 # PowerPoint (1920x1080)
-node index.js --preset ppt
+h2i --preset ppt
 
 # Converter pasta específica
-node index.js html-files/work --format jpeg --quality 95
+h2i work/htmls --format jpeg --quality 95
+```
+
+### Visualização e Desenvolvimento (Preview)
+O projeto conta com ferramentas embutidas para facilitar o desenvolvimento dos seus HTMLs com live-reload, permitindo ver os resultados antes de gerar as imagens definitivas.
+```bash
+# Gerar página de preview para os HTMLs atuais
+npm run preview
+
+# Iniciar servidor de visualização local na porta 3000
+npm run preview:serve
+
+# Abrir o preview automaticamente no navegador
+npm run preview:open
 ```
 
 ### Scripts de Conveniência (Windows)
@@ -151,7 +291,12 @@ html-to-image/
 │   ├── CliParser.test.js       # Testes do CLI parser
 │   ├── ConfigManager.test.js   # Testes do gerenciador de config
 │   └── TemplateGenerator.test.js # Testes do gerador de templates
-├── 📁 html-files/              # Pasta de trabalho padrão
+├── 📁 work/                    # Pasta de trabalho unificada
+│   ├── 📁 htmls/               # Seus HTMLs para conversão
+│   ├── 📁 prompts/             # Prompts grandes e complexos
+│   └── 📁 assets/              # Assets compartilhados (imagens, CSS, JS)
+├── 📁 work/                    # Pasta de trabalho unificada
+│   └── 📁 examples/            # Exemplos de HTMLs
 ├── 📁 output/                  # Imagens geradas
 └── 📄 package.json             # Configuração do projeto
 ```
@@ -166,21 +311,21 @@ html-to-image/
 ### 1. Agência de Marketing Digital
 ```bash
 # Campanha Instagram - 10 posts
-node index.js campaigns/black-friday --preset instagram --generate 10
-node index.js campaigns/black-friday
+h2i campaigns/black-friday --preset instagram --generate 10
+h2i campaigns/black-friday
 ```
 
 ### 2. Apresentações Corporativas
 ```bash
 # Relatório mensal - 15 slides
-node index.js reports/q4-2024 --preset ppt --generate 15
-node index.js reports/q4-2024 --format jpeg --quality 95
+h2i reports/q4-2024 --preset ppt --generate 15
+h2i reports/q4-2024 --format jpeg --quality 95
 ```
 
 ### 3. Documentação Técnica
 ```bash
 # Capturas de tela de interfaces
-node index.js docs/ui-components --width 1600 --height 900 --scale 1
+h2i docs/ui-components --width 1600 --height 900 --scale 1
 ```
 
 ## 🧪 Testes
@@ -199,7 +344,7 @@ npm run test:coverage
 scripts\test.bat
 ```
 
-**Cobertura Atual**: 34 testes passando ✅
+**Cobertura Atual**: 49 testes passando ✅
 
 ## 🔧 API Programática
 

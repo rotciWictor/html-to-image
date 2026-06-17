@@ -139,3 +139,17 @@ yarn.lock
 config/local.json
 config/development.json
 config/production.json
+
+# Local AI cookbook (não versionar)
+cookbook/
+
+# Base de conhecimento pessoal (não versionar)
+knowledge/*
+!knowledge/README.md
+!knowledge/**/README.md
+!knowledge/**/.gitkeep
+
+# Pasta de trabalho (não versionar)
+work/*
+!work/README.md
+!work/**/.gitkeep

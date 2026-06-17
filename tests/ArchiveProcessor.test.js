@@ -1,9 +1,18 @@
-const ArchiveProcessor = require('../lib/ArchiveProcessor');
 const fs = require('fs');
 const path = require('path');
 
-// Mock fs para testes
-jest.mock('fs');
+// Mock node-stream-zip (API async) deve vir antes de requerer o módulo testado
+jest.mock('node-stream-zip', () => {
+  return {
+    async: class MockStreamZipAsync {
+      constructor() {}
+      extract() { return Promise.resolve(2); }
+      close() { return Promise.resolve(); }
+    }
+  };
+});
+
+const ArchiveProcessor = require('../lib/ArchiveProcessor');
 
 describe('ArchiveProcessor', () => {
   let processor;
@@ -35,15 +44,15 @@ describe('ArchiveProcessor', () => {
 
   describe('findHtmlFiles', () => {
     beforeEach(() => {
-      fs.readdirSync.mockImplementation((dir) => {
+      jest.spyOn(fs, 'readdirSync').mockImplementation((dir) => {
         if (dir.includes('subfolder')) {
           return ['nested.html'];
         }
         return ['file1.html', 'file2.txt', 'subfolder'];
       });
       
-      fs.statSync.mockImplementation((filePath) => {
-        if (filePath.includes('subfolder')) {
+      jest.spyOn(fs, 'statSync').mockImplementation((filePath) => {
+        if (filePath.includes('subfolder') && !filePath.endsWith('.html')) {
           return { isDirectory: () => true };
         }
         return { isDirectory: () => false };
@@ -52,61 +61,28 @@ describe('ArchiveProcessor', () => {
 
     test('deve encontrar arquivos HTML em pasta e subpastas', () => {
       const htmlFiles = processor.findHtmlFiles('/test/folder');
+      const norm = p => p.replace(/\\/g, '/');
+      const normalized = htmlFiles.map(norm);
       
-      expect(htmlFiles).toContain('/test/folder/file1.html');
-      expect(htmlFiles).toContain('/test/folder/subfolder/nested.html');
-      expect(htmlFiles).not.toContain('/test/folder/file2.txt');
+      expect(normalized).toContain('/test/folder/file1.html');
+      expect(normalized).toContain('/test/folder/subfolder/nested.html');
+      expect(normalized).not.toContain('/test/folder/file2.txt');
     });
   });
 
   describe('extractZip', () => {
     test('deve extrair arquivo ZIP', async () => {
-      const mockZipfile = {
-        lazyEntries: true,
-        entryCount: 2,
-        readEntry: jest.fn(),
-        openReadStream: jest.fn(),
-        close: jest.fn(),
-        on: jest.fn()
-      };
-
-      const yauzl = require('yauzl');
-      yauzl.open = jest.fn((path, options, callback) => {
-        callback(null, mockZipfile);
-      });
-
-      // Mock do evento 'entry'
-      mockZipfile.on.mockImplementation((event, callback) => {
-        if (event === 'entry') {
-          // Simular duas entradas
-          setTimeout(() => {
-            callback({ fileName: 'test1.html' });
-            callback({ fileName: 'test2.html' });
-          }, 0);
-        }
-      });
-
-      // Mock do openReadStream
-      mockZipfile.openReadStream.mockImplementation((entry, callback) => {
-        const mockStream = {
-          pipe: jest.fn(),
-          on: jest.fn()
-        };
-        callback(null, mockStream);
-      });
-
-      const result = await processor.extractZip('/test.zip', '/extract');
+      const result = await processor.extractZip('test.zip', '/extract');
       
       expect(result).toBe('/extract');
-      expect(yauzl.open).toHaveBeenCalledWith('/test.zip', { lazyEntries: true }, expect.any(Function));
     });
   });
 
   describe('processArchive', () => {
     beforeEach(() => {
-      fs.existsSync.mockReturnValue(true);
-      fs.mkdirSync.mockImplementation(() => {});
-      fs.rmSync.mockImplementation(() => {});
+      jest.spyOn(fs, 'existsSync').mockReturnValue(true);
+      jest.spyOn(fs, 'mkdirSync').mockImplementation(() => {});
+      jest.spyOn(fs, 'rmSync').mockImplementation(() => {});
     });
 
     test('deve processar arquivo ZIP e encontrar HTMLs', async () => {
@@ -133,8 +109,8 @@ describe('ArchiveProcessor', () => {
 
   describe('cleanup', () => {
     test('deve remover pasta temporária', () => {
-      fs.existsSync.mockReturnValue(true);
-      fs.rmSync.mockImplementation(() => {});
+      jest.spyOn(fs, 'existsSync').mockReturnValue(true);
+      jest.spyOn(fs, 'rmSync').mockImplementation(() => {});
 
       processor.cleanup('/temp/folder');
       
@@ -142,7 +118,7 @@ describe('ArchiveProcessor', () => {
     });
 
     test('não deve falhar se pasta não existir', () => {
-      fs.existsSync.mockReturnValue(false);
+      jest.spyOn(fs, 'existsSync').mockReturnValue(false);
 
       expect(() => processor.cleanup('/temp/folder')).not.toThrow();
     });

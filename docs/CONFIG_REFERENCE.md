@@ -49,8 +49,8 @@ node index.js --format jpeg --quality 90
 
 ## Boas práticas (resumo)
 
-- Coloque todos os assets em `html-files/assets/`.
-- Dentro de `html-files/work/`, referencie assets como `./assets/...` ou `assets/...` — o conversor resolve automaticamente para `../assets/...`.
+- Coloque todos os assets em `work/assets/`.
+- Dentro de `work/htmls/`, referencie assets como `./assets/...` ou `assets/...` — o conversor resolve automaticamente para `../assets/...`.
 - **Imagens geradas são salvas na pasta `output/` por padrão** (criada automaticamente se não existir).
 - Imagens externas via `https://...` são suportadas; o conversor aguarda o carregamento das imagens antes do screenshot.
 - Para fontes, use `@font-face` e aguarde `document.fonts.ready` antes do screenshot.
@@ -73,6 +73,25 @@ Estas opções são propostas e podem ser implementadas sob demanda:
 - `--concurrency 3` define conversões em paralelo
 
 Se quiser priorizar alguma, avise que implemento na sequência.
+
+## IA (Gemini/Ollama/OpenAI)
+
+Variáveis de ambiente e flags relacionadas ao modo IA.
+
+**Nota**: OpenAI está marcado como WIP - implementação básica não testada com API real.
+
+| Variável/Flag | Descrição | Padrão |
+|---|---|---|
+| `--ai` | Ativa geração via IA | `false` |
+| `--prompt` | Prompt a ser enviado à IA | - |
+| `--slides` | Quantidade de HTMLs a gerar | `6` |
+| `--provider` | Provedor de IA: `gemini` | `ollama` | `openai` | `gemini` |
+| `--model` | Modelo LLM (ex: gemini-2.5-flash | llama3.1 | gpt-4o-mini) | `gemini-2.5-flash` |
+| `GEMINI_API_KEY` | Chave da API do Google Gemini | - |
+| `OLLAMA_BASE_URL` | URL do servidor Ollama | `http://localhost:11434` |
+| `OLLAMA_MODEL` | Modelo padrão do Ollama | `gpt-oss:latest` |
+| `OPENAI_BASE_URL` | URL do provedor compatível com OpenAI | `https://api.openai.com/v1` |
+| `OPENAI_API_KEY` | Chave da API para provedores OpenAI-compatíveis | - |
 
 ## Configuração inline no HTML (IMPLEMENTADO)
 

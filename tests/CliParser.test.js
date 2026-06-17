@@ -44,7 +44,7 @@ describe('CliParser', () => {
       const options = { format: 'png', quality: '90', width: '1200', height: '800', scale: '2', preset: 'instagram' };
       const result = parser.validateAndNormalizeOptions(options);
       expect(result.width).toBe(1080);
-      expect(result.height).toBe(1080);
+      expect(result.height).toBe(1440);
       expect(result.background).toBe('transparent');
     });
 
