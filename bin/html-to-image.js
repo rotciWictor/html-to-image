@@ -26,6 +26,16 @@ class HtmlToImageConverter {
 
   async run() {
     try {
+      // Verifica se o usuário chamou o script sem nenhum argumento (ou com a flag --wizard)
+      const hasArgs = process.argv.length > 2;
+      const isWizard = process.argv.includes('--wizard');
+      
+      if (!hasArgs || isWizard) {
+        const InteractiveWizard = require('../lib/InteractiveWizard');
+        const wizard = new InteractiveWizard(this.orchestrator);
+        return await wizard.run();
+      }
+
       // Parse CLI arguments
       const { folder, options } = this.cliParser.parse();
       
