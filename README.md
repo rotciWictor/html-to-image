@@ -239,6 +239,19 @@ h2i --preset ppt
 h2i work/htmls --format jpeg --quality 95
 ```
 
+### Visualização e Desenvolvimento (Preview)
+O projeto conta com ferramentas embutidas para facilitar o desenvolvimento dos seus HTMLs com live-reload, permitindo ver os resultados antes de gerar as imagens definitivas.
+```bash
+# Gerar página de preview para os HTMLs atuais
+npm run preview
+
+# Iniciar servidor de visualização local na porta 3000
+npm run preview:serve
+
+# Abrir o preview automaticamente no navegador
+npm run preview:open
+```
+
 ### Scripts de Conveniência (Windows)
 ```bash
 # Executar com interface amigável

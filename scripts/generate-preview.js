@@ -95,15 +95,7 @@ function buildPreviewHtml(files) {
         const text = await res.text();
         const parser = new DOMParser();
         const doc = parser.parseFromString(text, 'text/html');
-        // Reescrever urls em CSS embutido
-        const css = Array.from(doc.querySelectorAll('style')).map(s => rewriteCssUrls(s.textContent || '', url)).join('\n');
-        const styles = css ? '<style>'+css+'</style>' : '';
-        // Reescrever assets relativos no HTML
-        const tmp = document.createElement('div');
-        tmp.innerHTML = doc.body ? doc.body.innerHTML : text;
-        rewriteDomAssets(tmp, url);
-        const inner = byId('slideInner');
-        inner.innerHTML = styles + '\n' + tmp.innerHTML;
+        
         // detectar dimensões via h2i-config ou container raiz
         try {
           const cfgEl = doc.querySelector('#h2i-config');
@@ -119,15 +111,36 @@ function buildPreviewHtml(files) {
             if (w>0 && h>0) { baseW = w; baseH = h; }
           }
         } catch (_) {}
+        
         const wrap = byId('wrap');
         wrap.style.width = baseW + 'px';
         wrap.style.height = baseH + 'px';
+        
+        // Em vez de hackear o DOM, usamos um iframe perfeitamente isolado!
+        let iframe = byId('slideInner');
+        if (iframe.tagName !== 'IFRAME') {
+          const newIframe = document.createElement('iframe');
+          newIframe.id = 'slideInner';
+          newIframe.style.width = '100%';
+          newIframe.style.height = '100%';
+          newIframe.style.border = 'none';
+          iframe.parentNode.replaceChild(newIframe, iframe);
+          iframe = newIframe;
+        }
+        iframe.src = url.toString();
+        
         // Após carregar novo conteúdo, re-aplicar zoom atual
         const z = getParam('zoom') || 'fit';
         applyZoom(z);
       } catch (e) {
-        const inner = byId('slideInner');
-        inner.innerHTML = '<div style="padding:16px;color:#ef4444">Falha ao carregar '+ file +': '+ String(e) +'</div>';
+        let container = byId('slideInner');
+        if (container.tagName === 'IFRAME') {
+            const div = document.createElement('div');
+            div.id = 'slideInner';
+            container.parentNode.replaceChild(div, container);
+            container = div;
+        }
+        container.innerHTML = '<div style="padding:16px;color:#ef4444">Falha ao carregar '+ file +': '+ String(e) +'</div>';
       }
     }
     function highlight(file){ document.querySelectorAll('a.item').forEach(a=>a.classList.toggle('active', a.dataset.file===file)); }
