@@ -166,10 +166,12 @@ Elementos desalinhados - sempre verificar alinhamento central/grid
 Texto cortado ou sobreposto - garantir que todo conteúdo esteja visível
 Ter apenas um HTML, deve se ter um HTML para cada pagina , slide ou imagem
 
-incluir essa div nos htmls
-        <div style="position: absolute; bottom: 80px; right: 80px; font-family: 'Inter', 'Roboto', sans-serif; font-weight: 400; font-size: 24px; color: inherit; opacity: 0.6; z-index: 3;">
-            @era.outro.meu.plano
-        </div>
+10. Handle / Arroba (OPCIONAL):
+Por padrão, NÃO inclua nenhum "@handle" ou arroba nas imagens.
+SE e SOMENTE SE o usuário pedir explicitamente para incluir um @handle (como nome de usuário), use este estilo e posicionamento como exemplo/referência:
+<div style="position: absolute; bottom: 80px; right: 80px; font-family: 'Inter', 'Roboto', sans-serif; font-weight: 400; font-size: 24px; color: inherit; opacity: 0.6; z-index: 3;">
+    @seu.usuario.aqui
+</div>
 
 Usuario pode querer htmls de forma direta todos de uma vez, normalmente vira com um plano completo quando isso acontecer ou pode querer construir junto um a um se atente ao que lhe for pedido.
 
