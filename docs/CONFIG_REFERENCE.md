@@ -1,208 +1,81 @@
-# Guia de Configuração e CLI
+# ⚙️ Guia de Referência de Comandos (CLI)
 
-Este documento lista todas as opções disponíveis via CLI e orienta como configurar presets para Instagram (carrossel) e PowerPoint (slides).
+Embora a forma recomendada de usar o sistema seja através do Wizard Interativo (`npm start`), o projeto ainda mantém suporte total a comandos diretos (CLI) para automação e uso em scripts.
 
-## Opções atuais (CLI)
+## Comando Base
+O atalho do CLI é `h2i` (HTML to Image).
+Se o atalho não estiver funcionando globalmente, você pode rodar `node bin/html-to-image.js` ou `npm run h2i --`.
 
-- `--format png|jpeg|webp`
-  - Formato de saída da imagem
-  - Padrão: `png`
-  - Observação: `jpeg` não suporta transparência
+---
 
-- `--quality 1..100`
-  - Qualidade da imagem (apenas para `jpeg`)
-  - Padrão: `90`
+## 📸 1. Conversão Básica (HTML para Imagem)
 
-- `--width N` / `--height N`
-  - Dimensões da viewport, em pixels
-  - Padrão: `1200x800` (ou `1080x1440` com `--preset instagram`, `1920x1080` com `--preset stories` ou `--preset ppt`)
+Processa arquivos HTML e converte usando o Puppeteer.
 
-- `--scale N`
-  - Device scale factor (DPI virtual). Ex.: 2 para alta definição
-  - Padrão: `2`
+- **Processar toda a pasta padrão (`work/htmls/`)**:
+  ```bash
+  h2i
+  ```
+- **Processar um arquivo específico**:
+  ```bash
+  h2i work/htmls/meu_arquivo.html
+  ```
+- **Mudar formato para JPEG (Padrão é PNG)**:
+  ```bash
+  h2i --format jpeg --quality 95
+  ```
 
-- `--fullpage` / `--no-fullpage`
-  - Capturar página inteira ou apenas a viewport
-  - Padrão: `--fullpage`
-
-## Presets (implementado)
-
-- `--preset instagram` → 1080x1440, PNG (padrão)
-- `--preset stories` → 1920x1080, PNG (padrão)
-- `--preset ppt` → 1920x1080, PNG (padrão)
-
-Exemplos:
+### 📐 Presets de Tamanho
+Por padrão o layout é 1200x800. Use presets para mudar as dimensões:
+- `--preset instagram` → 1080x1440
+- `--preset stories` → 1920x1080
+- `--preset ppt` → 1920x1080
 
 ```bash
-# Instagram (1080x1440)
-node index.js --preset instagram
-
-# Stories (1920x1080)
-node index.js --preset stories
-
-# PowerPoint (1920x1080)
-node index.js --preset ppt
-
-# JPEG (qualidade 90%)
-node index.js --format jpeg --quality 90
+h2i --preset instagram
 ```
 
-## Boas práticas (resumo)
+---
 
-- Coloque todos os assets em `work/assets/`.
-- Dentro de `work/htmls/`, referencie assets como `./assets/...` ou `assets/...` — o conversor resolve automaticamente para `../assets/...`.
-- **Imagens geradas são salvas na pasta `output/` por padrão** (criada automaticamente se não existir).
-- Imagens externas via `https://...` são suportadas; o conversor aguarda o carregamento das imagens antes do screenshot.
-- Para fontes, use `@font-face` e aguarde `document.fonts.ready` antes do screenshot.
-- Use unidades responsivas (`rem`, `em`, `vw`, `vh`) onde possível.
-- Evite animações em andamento no momento do screenshot; se necessário, aumente o tempo de espera.
-- Para JPEG (sem transparência), defina um fundo sólido no HTML.
+## 🌍 2. Tradução Automática Multi-Agente
 
-## Opções futuras (planejadas)
+Traduz o texto de arquivos HTML usando IA local (Ollama).
 
-Estas opções são propostas e podem ser implementadas sob demanda:
+- **Traduzir para Inglês**:
+  ```bash
+  h2i --translate en
+  ```
+- **Traduzir e Converter para imagem logo em seguida**:
+  ```bash
+  h2i --translate es --preset instagram
+  ```
+- **Trocar o Provider (Padrão Ollama)**:
+  ```bash
+  h2i --translate fr --provider openai --model gpt-4o-mini
+  ```
 
-- `--preset instagram|ppt` aplica dimensões automaticamente
-- `--generate N` cria N HTMLs base (ex.: `ig-slide-1.html`, `ig-slide-2.html`, ...)
-- `--out-dir ./output` define diretório de saída das imagens (padrão: `./output`)
-- `--suffix "-slide1"` adiciona sufixo ao nome do arquivo de saída
-- `--wait-ms 2000` aguarda N ms adicionais antes do screenshot
-- `--wait-for "#root"` aguarda seletor existir antes do screenshot
-- `--background "#fff|transparent"` define fundo (útil para PNG/WebP)
-- `--pattern "{name}-{width}x{height}.{ext}"` padrão para o nome do arquivo
-- `--concurrency 3` define conversões em paralelo
+*(Para os códigos de idioma disponíveis, consulte `ISO_639_LANG_CODES.md`)*
 
-Se quiser priorizar alguma, avise que implemento na sequência.
+---
 
-## IA (Gemini/Ollama/OpenAI)
+## 🧠 3. Geração de Conteúdo IA (Modo Legado)
 
-Variáveis de ambiente e flags relacionadas ao modo IA.
+*(Nota: É altamente recomendado usar o Chat Interativo via `npm start` em vez desta opção).*
 
-**Nota**: OpenAI está marcado como WIP - implementação básica não testada com API real.
+Se você precisar automatizar a geração de HTMLs num script, pode passar o prompt diretamente:
 
-| Variável/Flag | Descrição | Padrão |
-|---|---|---|
-| `--ai` | Ativa geração via IA | `false` |
-| `--prompt` | Prompt a ser enviado à IA | - |
-| `--slides` | Quantidade de HTMLs a gerar | `6` |
-| `--provider` | Provedor de IA: `gemini` | `ollama` | `openai` | `gemini` |
-| `--model` | Modelo LLM (ex: gemini-2.5-flash | llama3.1 | gpt-4o-mini) | `gemini-2.5-flash` |
-| `GEMINI_API_KEY` | Chave da API do Google Gemini | - |
-| `OLLAMA_BASE_URL` | URL do servidor Ollama | `http://localhost:11434` |
-| `OLLAMA_MODEL` | Modelo padrão do Ollama | `gpt-oss:latest` |
-| `OPENAI_BASE_URL` | URL do provedor compatível com OpenAI | `https://api.openai.com/v1` |
-| `OPENAI_API_KEY` | Chave da API para provedores OpenAI-compatíveis | - |
-
-## Configuração inline no HTML (IMPLEMENTADO)
-
-O conversor agora pode ler configurações diretamente dos arquivos HTML, sobrescrevendo as flags da CLI. Isso permite que cada HTML tenha suas próprias configurações específicas.
-
-### Método 1: JSON embutido (recomendado)
-
-Inclua no `<head>` do HTML:
-
-```html
-<script id="h2i-config" type="application/json">
-{
-  "format": "png",
-  "quality": 90,
-  "width": 1080,
-  "height": 1080,
-  "deviceScaleFactor": 2,
-  "fullPage": true,
-  "background": "transparent",
-  "outDir": "./export",
-  "suffix": "-v1"
-}
-</script>
-```
-
-### Método 2: Meta tags
-
-```html
-<meta name="h2i:format" content="jpeg">
-<meta name="h2i:quality" content="85">
-<meta name="h2i:width" content="1920">
-<meta name="h2i:height" content="1080">
-<meta name="h2i:fullPage" content="true">
-<meta name="h2i:background" content="#ffffff">
-<meta name="h2i:outDir" content="./slides">
-<meta name="h2i:suffix" content="-final">
-```
-
-### Opções suportadas
-
-- `format`: "png" | "jpeg" | "webp"
-- `quality`: 1-100 (apenas para JPEG)
-- `width`, `height`: dimensões em pixels
-- `deviceScaleFactor`: escala (1, 2, 3, 4...)
-- `fullPage`: true | false (página completa ou apenas viewport)
-- `background`: "transparent" (PNG/WebP) ou cor (#ffffff, rgb(255,255,255), etc.)
-- `outDir`: pasta de destino (ex.: "./output", "./export", "../images")
-- `suffix`: sufixo no nome do arquivo (ex.: "-v1", "-final")
-
-### Prioridade de configuração
-
-1. **Configuração inline no HTML** (maior prioridade)
-2. Flags da linha de comando
-3. Configurações padrão
-
-### Exemplos práticos
-
-**Instagram com config inline:**
-```html
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instagram Slide 1</title>
-    
-    <script id="h2i-config" type="application/json">
-    {
-      "format": "png",
-      "width": 1080,
-      "height": 1440,
-      "background": "transparent",
-      "outDir": "./output",
-      "suffix": "-slide1"
-    }
-    </script>
-</head>
-<body>
-    <!-- conteúdo do slide -->
-</body>
-</html>
-```
-
-**PowerPoint com meta tags:**
-```html
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PPT Slide 1</title>
-    
-    <meta name="h2i:format" content="jpeg">
-    <meta name="h2i:quality" content="95">
-    <meta name="h2i:width" content="1920">
-    <meta name="h2i:height" content="1080">
-    <meta name="h2i:background" content="#ffffff">
-    <meta name="h2i:outDir" content="./output">
-    <meta name="h2i:suffix" content="-slide1">
-</head>
-<body>
-    <!-- conteúdo do slide -->
-</body>
-</html>
-```
-
-Com configuração inline, você pode simplesmente executar:
 ```bash
-node html-to-image.js
+h2i --ai --prompt "Crie 3 slides corporativos sobre métricas do Q1" --preset ppt
 ```
 
-E cada HTML será processado com suas próprias configurações específicas.
+### Consultando a Base de Conhecimento (RAG)
+Para ver quais documentos o "Bibliotecário" RAG tem acesso em `knowledge/documents/`:
 
-
+- **Listar todos os documentos**:
+  ```bash
+  h2i --list-docs
+  ```
+- **Pesquisar na base**:
+  ```bash
+  h2i --search-docs "manual"
+  ```
