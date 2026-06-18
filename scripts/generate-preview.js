@@ -63,8 +63,8 @@ function buildPreviewHtml(files) {
         const baseUrl = base instanceof URL ? base : new URL(base, window.location.href);
         const pathname = baseUrl.pathname || '';
         if (pathname.indexOf('/htmls/') !== -1) {
-          if (src.startsWith('./assets/')) return src.replace('./assets/', '../assets/');
-          if (src.startsWith('assets/')) return '../' + src;
+          if (src.startsWith('./assets/')) return src.replace('./assets/', '../../assets/');
+          if (src.startsWith('assets/')) return '../../' + src;
         }
       } catch (_) {}
       return src;
