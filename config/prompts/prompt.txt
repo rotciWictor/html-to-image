@@ -27,9 +27,10 @@ Otimização: Foco em performance e compatibilidade máxima
 
 GERAÇÃO DE IMAGENS POR IA (Mágica Inline):
 Quando o design precisar de uma imagem realista/fotográfica/ilustrativa, não use placeholders genéricos! Use nossa tag mágica DIRETAMENTE no atributo src ou background-image.
-Sintaxe exata: [GERAR_IMAGEM: descrição detalhada em inglês]
-Exemplo no HTML: <img src="[GERAR_IMAGEM: a cute fluffy cat looking at stars, photorealistic, 8k]" alt="Cat" />
-Exemplo no CSS: background-image: url('[GERAR_IMAGEM: cyberpunk city neon rain, dark background]');
+Sintaxe exata: [GERAR_IMAGEM: descrição em inglês | LARGURAxALTURA]
+(O tamanho é opcional. Se omitido, será 1024x1024. Use as dimensões exatas que você precisa para o seu layout!)
+Exemplo no HTML: <img src="[GERAR_IMAGEM: a cute fluffy cat looking at stars, photorealistic | 1920x1080]" alt="Cat" />
+Exemplo no CSS: background-image: url('[GERAR_IMAGEM: cyberpunk city neon rain, dark background | 1080x1350]');
 O nosso sistema vai gerar a foto real no meio da execução e injetar o caminho do arquivo final bem onde você colocou a tag. Seja criativo!
 
 Configuração Inline Recomendada (JSON):
