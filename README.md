@@ -57,7 +57,12 @@ A Gema é uma designer editorial impulsionada por IA (Gemini, Ollama ou OpenAI).
 Se você mencionar palavras como "referência", "guia", ou digitar mensagens longas, o sistema entra em modo RAG. O "Bibliotecário" vai procurar o documento mais relevante na pasta `knowledge/documents/` e enviar para a Gema usar como base.
 
 ### 🖼️ Geração de Imagens
-A Gema pode gerar imagens artísticas para o seu layout. Se ela precisar de uma foto de uma "cidade cyberpunk", o sistema chamará o **Gemini Imagen API** ou seu **ComfyUI local** para gerar a imagem, salvar na pasta `assets/` e linkar no HTML gerado.
+A Gema pode gerar imagens artísticas para o seu layout. A arquitetura de roteamento suporta vários provedores gratuitos e premium:
+- **Pollinations.ai (Padrão):** Hub descentralizado gratuito. Suporta múltiplos modelos (Flux, Z-Image Turbo, etc.) e aceita chave de API para fila prioritária.
+- **Hugging Face Serverless:** Acesso direto via API gratuita a modelos como `FLUX.1-schnell`.
+- **Google Gemini Imagen** e **ComfyUI Local**.
+
+**Sistemas de Fallback:** O sistema foi desenhado para ser anti-falhas. Se a requisição principal cair (ex: problema de rota no Hugging Face), ele automaticamente realiza o *fallback* para a infraestrutura distribuída do Pollinations.ai.
 
 ---
 
@@ -88,9 +93,16 @@ GEMINI_API_KEY=sua_chave_aqui
 OLLAMA_TRANSLATE_MODEL=gemma2:9b
 OLLAMA_LOGIC_MODEL=qwen2.5-coder:7b
 
-# Gerador de Imagens (gemini ou comfyui)
-IMAGE_PROVIDER=gemini
-COMFYUI_URL=http://127.0.0.1:8188
+# Gerador de Imagens (pollinations, huggingface, gemini, comfyui)
+IMAGE_PROVIDER=pollinations
+
+# --- Hugging Face ---
+HF_API_KEY=sua_chave_aqui
+HF_IMAGE_MODEL=black-forest-labs/FLUX.1-schnell
+
+# --- Pollinations ---
+POLLINATIONS_API_KEY=sk_sua_chave_aqui
+POLLINATIONS_MODEL=flux
 ```
 
 ---

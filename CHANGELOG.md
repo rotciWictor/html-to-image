@@ -5,9 +5,20 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
-## [2.0.0] - 2025-01-18
+## [2.1.0] - 2026-06-18
 
-### 🚀 Major Release - CLI Enhancement & Major Improvements
+### 🚀 Nova Arquitetura de Geração de Imagens
+
+### Adicionado
+- **Provedores de Imagem**: Integração com `Hugging Face Serverless` para acesso nativo a modelos FLUX.1.
+- **Hub Avançado**: Suporte estendido ao `Pollinations.ai` permitindo uso de Chaves API (Fila VIP) e escolha dinâmica de modelos (Flux Schnell, FLUX.2 Klein 4B, Z-Image Turbo, etc).
+- **Menu Dinâmico**: Menu do `InteractiveWizard` atualizado com sub-menus para a escolha de provedores de imagem e modelos específicos.
+- **Sistema de Fallback Seguro**: Adicionada malha de segurança onde falhas no provedor principal (ex: `fetch failed` no Hugging Face) acionam automaticamente o Pollinations (Privado) e, se falhar, o Pollinations (Público).
+- **Novas Variáveis de Ambiente**: `HF_API_KEY`, `HF_IMAGE_MODEL`, `POLLINATIONS_API_KEY`, `POLLINATIONS_MODEL` no `.env`.
+
+---
+
+## [2.0.0] - 2025-01-18
 
 ### Adicionado
 - **Novo comando CLI `h2i`** - Comando muito mais curto e intuitivo
